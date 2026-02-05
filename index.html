@@ -1,32 +1,1119 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的HTML示例</title>
-  <style>
-    body {
-      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-      line-height: 1.6;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-      color: #333;
-    }
-    h1 {
-      color: #4e72f1;
-      text-align: center;
-    }
-    p {
-      font-size: 16px;
-      margin-bottom: 15px;
-     text-align: center;
-}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026你的最佳CP马是什么？趣味测试</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fdfcfb 0%, #f5f7fa 100%);
+            min-height: 100vh;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .page {
+            display: none;
+            padding: 40px;
+            min-height: 600px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            color: #e67e22;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+        }
+
+        .title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(to right, #e67e22, #f39c12);
+            border-radius: 2px;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        .intro {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #e67e22;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .stats-container {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 50px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            flex: 0 0 48%;
+            background: white;
+            padding: 25px 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: #e67e22;
+            margin-bottom: 15px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+
+        .btn {
+            display: block;
+            width: 280px;
+            margin: 0 auto;
+            padding: 18px 30px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn-start {
+            background: linear-gradient(to right, #e67e22, #f39c12);
+            color: white;
+        }
+
+        .btn-start:hover {
+            background: linear-gradient(to right, #d35400, #e67e22);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(230, 126, 34, 0.4);
+        }
+
+        /* 答题页面样式 */
+        .progress-container {
+            margin-bottom: 40px;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background-color: #ecf0f1;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #e67e22, #f1c40f);
+            width: 0%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        .question-container {
+            margin-bottom: 40px;
+        }
+
+        .question-number {
+            color: #e67e22;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .option:hover {
+            background-color: #f0f0f0;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background-color: #fff9e6;
+            border-color: #f1c40f;
+        }
+
+        .option input {
+            display: none;
+        }
+
+        .option-label {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            color: #777;
+            transition: all 0.2s;
+        }
+
+        .option.selected .option-label {
+            background-color: #e67e22;
+            color: white;
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 1.1rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .btn-nav {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-prev {
+            background: linear-gradient(to right, #95a5a6, #7f8c8d);
+            color: white;
+        }
+
+        .btn-prev:hover:not(:disabled) {
+            background: linear-gradient(to right, #7f8c8d, #95a5a6);
+        }
+
+        .btn-prev:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-next {
+            background: linear-gradient(to right, #f1c40f, #f39c12);
+            color: white;
+        }
+
+        .btn-next:hover:not(:disabled) {
+            background: linear-gradient(to right, #f39c12, #e67e22);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-submit {
+            background: linear-gradient(to right, #e74c3c, #e67e22);
+            color: white;
+            width: 200px;
+            margin: 40px auto 0;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(to right, #c0392b, #d35400);
+            transform: translateY(-3px);
+        }
+
+        /* 结果页面样式 */
+        .loading-container {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(230, 126, 34, 0.2);
+            border-top: 8px solid #e67e22;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            animation: spin 1.5s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.5rem;
+            color: #e67e22;
+            font-weight: bold;
+        }
+
+        .result-title {
+            color: #e67e22;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .horse-name {
+            color: #2c3e50;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .horse-img-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .horse-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 8px solid #f1c40f;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .horse-details {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .detail-item {
+            background-color: #f9f9f9;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .detail-title {
+            color: #e67e22;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .detail-title i {
+            margin-right: 10px;
+        }
+
+        .detail-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .btn-restart {
+            background: linear-gradient(to right, #3498db, #2ecc71);
+            color: white;
+            margin-top: 30px;
+        }
+
+        .btn-restart:hover {
+            background: linear-gradient(to right, #2980b9, #27ae60);
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 15px;
+            }
+
+            .page {
+                padding: 25px;
+            }
+
+            .title {
+                font-size: 2.2rem;
+            }
+
+            .stats-container {
+                flex-direction: column;
+            }
+
+            .stat-box {
+                min-width: 100%;
+                margin: 10px 0;
+            }
+
+            .horse-details {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn-nav {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>代码即粘效果即现</h1>
-  <p>无需服务器，HTML2WEB，把你的代码编程网站</p>
-  <p>无限创意，等你来试！</p>
+    <div class="container">
+        <!-- 首页 -->
+        <div class="page active" id="home-page">
+            <div class="header">
+                <h1 class="title">2026你的最佳CP马是什么</h1>
+                <p class="subtitle">探索你的性格，找到最适合你的CP马伙伴</p>
+            </div>
+
+            <div class="intro">
+                <p>在即将到来的2026年，每个人都希望能找到与自己完美匹配的CP马。这个趣味测试将通过一系列精心设计的问题，分析你的性格特点、喜好和价值观，为你匹配最适合你的CP马类型。</p>
+                <p>CP马不仅仅是简单的动物，它们代表着不同的性格特质和人生哲学。完成测试后，你将获得专属的CP马分析报告，包括马户籍、马形象、马祝福和马运势，帮助你更深入了解自己。</p>
+            </div>
+
+            <div class="stats-container">
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">测试题目</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-value">5分钟</div>
+                        <div class="stat-label">完成时间</div>
+                    </div>
+                </div>
+
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-horse-head"></i>
+                        </div>
+                        <div class="stat-value">7大类</div>
+                        <div class="stat-label">CP马种类</div>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="stat-value">智能匹配</div>
+                        <div class="stat-label">匹配算法</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-start" id="start-test">开始测试</button>
+        </div>
+
+        <!-- 答题页面 -->
+        <div class="page" id="quiz-page">
+            <div class="progress-container">
+                <div class="progress-text">
+                    <span>答题进度</span>
+                    <span id="progress-text">0/15</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-number" id="question-number">题目 1</div>
+                <div class="question-text" id="question-text">这里显示题目内容...</div>
+
+                <div class="options-container" id="options-container">
+                    <!-- 选项将通过JS动态生成 -->
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn-nav btn-prev" id="prev-btn" disabled>
+                    <i class="fas fa-arrow-left"></i> 上一题
+                </button>
+                <button class="btn-nav btn-next" id="next-btn" disabled>
+                    下一题 <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <button class="btn btn-submit" id="submit-btn" style="display: none;">提交答案</button>
+        </div>
+
+        <!-- 结果页面 -->
+        <div class="page" id="result-page">
+            <div class="loading-container" id="loading-container">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">正在匹配中，寻找最适合你的CP马...</div>
+            </div>
+
+            <div id="result-content" style="display: none;">
+                <h2 class="result-title">恭喜您！</h2>
+                <h2 class="result-title">2026选中最佳CP马</h2>
+
+                <div class="horse-details">
+                    <div class="detail-item">
+                        <div class="detail-title">
+                            <i class="fas fa-passport"></i> 马户籍
+                        </div>
+                        <div class="detail-content" id="horse-type"></div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-title">
+                            <i class="fas fa-image"></i> 马形象
+                        </div>
+                        <div class="horse-img-container">
+                            <div id="horse-img"></div>
+                        </div>
+                        <div class="detail-content" id="horse-appearance"></div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-title">
+                            <i class="fas fa-heart"></i> 马祝福
+                        </div>
+                        <div class="detail-content" id="horse-blessing"></div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-title">
+                            <i class="fas fa-lightbulb"></i> 马运势
+                        </div>
+                        <div class="detail-content" id="horse-meaning"></div>
+                    </div>
+                </div>
+
+                <button class="btn btn-restart" id="restart-btn">重新测试</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 测试题目数据
+        const questions = [
+            {
+                no: 1,
+                content: "在周末的闲暇时光，你更喜欢如何度过？",
+                options: [
+                    {value: "宅在家里看书、追剧或打游戏", score: 1},
+                    {value: "与朋友聚会、参加社交活动", score: 3},
+                    {value: "户外运动、探索自然", score: 4},
+                    {value: "学习新技能、提升自己", score: 2}
+                ]
+             }
+             //,
+            // {
+            //     no: 2,
+            //     content: "你更倾向于用哪种方式解决问题？",
+            //     options: [
+            //         {value: "冷静分析，制定详细计划", score: 2},
+            //         {value: "直觉判断，相信第一感觉", score: 4},
+            //         {value: "寻求他人帮助，集思广益", score: 3},
+            //         {value: "快速行动，在实践中调整", score: 1}
+            //     ]
+            // },
+            // {
+            //     no: 3,
+            //     content: "在团队中，你通常扮演什么角色？",
+            //     options: [
+            //         {value: "领导者，统筹全局", score: 4},
+            //         {value: "执行者，踏实完成任务", score: 1},
+            //         {value: "协调者，促进团队合作", score: 3},
+            //         {value: "创新者，提出新想法", score: 2}
+            //     ]
+            // },
+            // {
+            //     no: 4,
+            //     content: "你更看重以下哪种品质？",
+            //     options: [
+            //         {value: "忠诚可靠，值得信赖", score: 1},
+            //         {value: "聪明机智，反应迅速", score: 3},
+            //         {value: "勇敢无畏，敢于冒险", score: 4},
+            //         {value: "温和友善，善解人意", score: 2}
+            //     ]
+            // },
+            // {
+            //     no: 5,
+            //     content: "面对压力时，你的第一反应是？",
+            //     options: [
+            //         {value: "保持冷静，寻找解决方案", score: 2},
+            //         {value: "感到焦虑，但能逐渐调整", score: 1},
+            //         {value: "寻求支持，与他人分担", score: 3},
+            //         {value: "积极面对，将压力转化为动力", score: 4}
+            //     ]
+            // },
+            // {
+            //     no: 6,
+            //     content: "你认为人生最重要的是什么？",
+            //     options: [
+            //         {value: "家庭和情感的归属", score: 1},
+            //         {value: "事业和成就的实现", score: 4},
+            //         {value: "知识和智慧的积累", score: 2},
+            //         {value: "自由和体验的丰富", score: 3}
+            //     ]
+            // },
+            // {
+            //     no: 7,
+            //     content: "在爱情中，你更重视什么？",
+            //     options: [
+            //         {value: "安全感和稳定性", score: 1},
+            //         {value: "激情和浪漫", score: 4},
+            //         {value: "理解和默契", score: 2},
+            //         {value: "成长和共同进步", score: 3}
+            //     ]
+            // },
+            // {
+            //     no: 8,
+            //     content: "你如何对待新的挑战？",
+            //     options: [
+            //         {value: "谨慎评估，做好准备再尝试", score: 1},
+            //         {value: "充满好奇，乐于尝试新事物", score: 3},
+            //         {value: "积极迎接，视作成长机会", score: 4},
+            //         {value: "依赖经验，用熟悉方法应对", score: 2}
+            //     ]
+            // },
+            // {
+            //     no: 9,
+            //     content: "你希望自己在他人眼中的形象是？",
+            //     options: [
+            //         {value: "可靠稳重的", score: 1},
+            //         {value: "聪明睿智的", score: 2},
+            //         {value: "热情活力的", score: 4},
+            //         {value: "温柔体贴的", score: 3}
+            //     ]
+            // },
+            // {
+            //     no: 10,
+            //     content: "2026年，你最期待的生活变化是？",
+            //     options: [
+            //         {value: "事业有新的突破", score: 4},
+            //         {value: "建立稳定的家庭", score: 1},
+            //         {value: "掌握新的技能", score: 2},
+            //         {value: "结交更多朋友", score: 3}
+            //     ]
+            // },
+            // {
+            //     no: 11,
+            //     content: "你最喜欢的沟通方式是？",
+            //     options: [
+            //         {value: "直接坦诚，开门见山", score: 4},
+            //         {value: "委婉含蓄，照顾对方感受", score: 2},
+            //         {value: "条理清晰，逻辑分明", score: 3},
+            //         {value: "倾听为主，少说多听", score: 1}
+            //     ]
+            // },
+            // {
+            //     no: 12,
+            //     content: "当你情绪低落时，通常如何调节？",
+            //     options: [
+            //         {value: "独自消化，自我调整", score: 1},
+            //         {value: "找朋友倾诉，寻求安慰", score: 3},
+            //         {value: "用运动或旅行转移注意力", score: 4},
+            //         {value: "分析原因，理性解决", score: 2}
+            //     ]
+            // },
+            // {
+            //     no: 13,
+            //     content: "你对未来的规划更倾向于？",
+            //     options: [
+            //         {value: "有明确的五年、十年计划", score: 1},
+            //         {value: "设定大致方向，灵活调整", score: 2},
+            //         {value: "跟随内心，享受当下", score: 4},
+            //         {value: "随机应变，不特别规划", score: 3}
+            //     ]
+            // },
+            // {
+            //     no: 14,
+            //     content: "在团队合作中，你最不能忍受的是？",
+            //     options: [
+            //         {value: "不守信用，推卸责任", score: 1},
+            //         {value: "缺乏创意，墨守成规", score: 4},
+            //         {value: "沟通不畅，各自为政", score: 3},
+            //         {value: "效率低下，拖延进度", score: 2}
+            //     ]
+            // },
+            // {
+            //     no: 15,
+            //     content: "你如何定义成功的人生？",
+            //     options: [
+            //         {value: "家庭幸福，生活安稳", score: 1},
+            //         {value: "实现理想，成就非凡", score: 4},
+            //         {value: "内心平静，精神富足", score: 2},
+            //         {value: "经历丰富，无怨无悔", score: 3}
+            //     ]
+            // }
+        ];
+
+        // CP马数据
+        const horsesData = {
+            feng: [
+                {
+                    name: "千里马",
+                    zhufu: "一日千里，前程似锦，愿你在2026年如千里马般疾驰，抵达梦想的彼岸。",
+                    yuyi: "象征着速度与远见，代表拥有明确目标并能快速达成的人。千里马型的人通常行动力强，目光长远。",
+                    matu: "风系",
+                    appearance: "体型优美，线条流畅，鬃毛如风般飘逸，眼神锐利有神，四肢修长有力，奔跑时如疾风掠过。"
+                },
+                {
+                    name: "追风马",
+                    zhufu: "追风逐日，自由不羁，愿你在2026年如风般自由，追寻心中的方向。",
+                    yuyi: "代表自由与探索精神，象征着不受束缚、勇于探索未知的个性。",
+                    matu: "风系",
+                    appearance: "身姿轻盈，毛色浅灰如云雾，鬃毛和尾巴在奔跑时如飘扬的旗帜，眼神灵动而好奇。"
+                }
+            ],
+            lei: [
+                {
+                    name: "雷霆马",
+                    zhufu: "雷霆万钧，势不可挡，愿你在2026年如雷霆般有力，破除一切障碍。",
+                    yuyi: "象征力量与决断力，代表果断坚决、行动迅猛的性格特点。",
+                    matu: "雷系",
+                    appearance: "体型健壮，肌肉发达，毛色深灰带闪电纹路，眼神坚定有力，奔跑时如雷鸣震撼大地。"
+                },
+                {
+                    name: "震岳马",
+                    zhufu: "稳如泰山，动如雷霆，愿你在2026年如山岳般稳固，如雷霆般有力。",
+                    yuyi: "代表稳定与力量的结合，象征既有坚定立场又能爆发出强大能量的人。",
+                    matu: "雷系",
+                    appearance: "体格魁梧，肩宽背厚，毛色深褐，鬃毛浓密如狮鬃，踏步时地面仿佛都在震动。"
+                }
+            ],
+            dian: [
+                {
+                    name: "闪电马",
+                    zhufu: "电光石火，瞬息万变，愿你在2026年如闪电般迅速，抓住每一个机遇。",
+                    yuyi: "象征速度与变化，代表思维敏捷、能快速适应环境变化的聪明人。",
+                    matu: "电系",
+                    appearance: "体型精悍，毛色银白带蓝色电纹，眼神锐利如电，行动时如闪电划过，留下一道残影。"
+                },
+                {
+                    name: "流光马",
+                    zhufu: "流光溢彩，智慧闪耀，愿你在2026年如电流般敏锐，洞察生活的本质。",
+                    yuyi: "代表智慧与洞察力，象征思维活跃、有敏锐观察力的人。",
+                    matu: "电系",
+                    appearance: "体型匀称，毛色银灰，在光线下呈现流光溢彩的效果，眼睛明亮有神，仿佛能洞察一切。"
+                }
+            ],
+            huo: [
+                {
+                    name: "烈焰马",
+                    zhufu: "热情如火，照亮前路，愿你在2026年如烈焰般炽热，点燃生活的激情。",
+                    yuyi: "象征热情与活力，代表充满激情、能感染他人的性格特点。",
+                    matu: "火系",
+                    appearance: "毛色赤红如火焰，鬃毛和尾巴仿佛跳动的火苗，眼神炽热有神，奔跑时如一团移动的火焰。"
+                },
+                {
+                    name: "熔岩马",
+                    zhufu: "内心炽热，外表沉稳，愿你在2026年如熔岩般有力量，慢慢改变周围的世界。",
+                    yuyi: "代表内在热情与外在沉稳的结合，象征有深厚内涵和持久热情的人。",
+                    matu: "火系",
+                    appearance: "毛色暗红带黑色斑纹，如同冷却的熔岩，眼神深邃，行动时步伐沉稳有力。"
+                }
+            ],
+            shui: [
+                {
+                    name: "清泉马",
+                    zhufu: "清澈如水，滋润心田，愿你在2026年如清泉般纯净，带来宁静与平和。",
+                    yuyi: "象征纯净与平和，代表内心清澈、能带来安宁与治愈的人。",
+                    matu: "水系",
+                    appearance: "毛色淡蓝如泉水，鬃毛柔顺如水波，眼神温和清澈，行动优雅从容。"
+                },
+                {
+                    name: "海潮马",
+                    zhufu: "胸怀如海，包容万物，愿你在2026年如海潮般有节奏，把握生活的韵律。",
+                    yuyi: "代表包容与适应力，象征胸怀宽广、能适应各种环境的人。",
+                    matu: "水系",
+                    appearance: "毛色深蓝如深海，体型流畅，鬃毛如海浪般起伏，眼神宁静深邃，行动有韵律感。"
+                }
+            ],
+            tu: [
+                {
+                    name: "磐石马",
+                    zhufu: "坚实如石，稳如泰山，愿你在2026年如磐石般稳固，成为他人的依靠。",
+                    yuyi: "象征稳定与可靠，代表值得信赖、有责任感的性格特点。",
+                    matu: "土系",
+                    appearance: "体型敦实，肌肉结实，毛色土黄或褐色，步伐稳健，眼神温和坚定，给人以安全感。"
+                },
+                {
+                    name: "沃土马",
+                    zhufu: "厚德载物，滋养万物，愿你在2026年如沃土般丰饶，让美好生根发芽。",
+                    yuyi: "代表滋养与成长，象征能支持他人成长、有奉献精神的人。",
+                    matu: "土系",
+                    appearance: "毛色深褐带绿色斑点，仿佛长满青苔的沃土，眼神温和包容，行动从容不迫。"
+                }
+            ],
+            mu: [
+                {
+                    name: "森灵马",
+                    zhufu: "生机勃勃，生生不息，愿你在2026年如森林般繁茂，充满生机与希望。",
+                    yuyi: "象征生命力与成长，代表充满活力、不断成长进步的人。",
+                    matu: "木系",
+                    appearance: "毛色翠绿如新生树叶，身上有植物般的纹路，眼神灵动充满生机，行动轻盈如风拂过森林。"
+                },
+                {
+                    name: "古木马",
+                    zhufu: "根深叶茂，智慧沉淀，愿你在2026年如古木般有智慧，在岁月中积累成长。",
+                    yuyi: "代表智慧与沉淀，象征有深厚底蕴、在时间中不断积累的人。",
+                    matu: "木系",
+                    appearance: "毛色深绿带褐色斑纹，如同古老的树皮，眼神深邃有智慧，步伐从容大气。"
+                }
+            ]
+        };
+
+        // 马系与分数段对应关系
+        const horseTypeRanges = {
+            feng: { min: 15, max: 21 },
+            lei: { min: 22, max: 28 },
+            dian: { min: 29, max: 35 },
+            huo: { min: 36, max: 42 },
+            shui: { min: 43, max: 49 },
+            tu: { min: 50, max: 56 },
+            mu: { min: 57, max: 60 }
+        };
+
+        // 马系颜色
+        const horseTypeColors = {
+            feng: "#1abc9c",
+            lei: "#e74c3c",
+            dian: "#3498db",
+            huo: "#9b59b6",
+            shui: "#f39c12",
+            tu: "#f1c40f",
+            mu: "#34495e"
+        };
+
+        // 应用状态
+        const state = {
+            currentPage: 'home',
+            currentQuestion: 0,
+            answers: new Array(questions.length).fill(null),
+            totalScore: 0,
+            resultHorse: null
+        };
+
+        // DOM元素
+        const homePage = document.getElementById('home-page');
+        const quizPage = document.getElementById('quiz-page');
+        const resultPage = document.getElementById('result-page');
+        const startBtn = document.getElementById('start-test');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const questionNumber = document.getElementById('question-number');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const progressText = document.getElementById('progress-text');
+        const progressFill = document.getElementById('progress-fill');
+        const loadingContainer = document.getElementById('loading-container');
+        const resultContent = document.getElementById('result-content');
+        const horseName = document.getElementById('horse-name');
+        const horseImg = document.getElementById('horse-img');
+        const horseType = document.getElementById('horse-type');
+        const horseBlessing = document.getElementById('horse-blessing');
+        const horseMeaning = document.getElementById('horse-meaning');
+        const horseAppearance = document.getElementById('horse-appearance');
+
+        // 页面切换函数
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            if (pageName === 'home') {
+                homePage.classList.add('active');
+            } else if (pageName === 'quiz') {
+                quizPage.classList.add('active');
+            } else if (pageName === 'result') {
+                resultPage.classList.add('active');
+            }
+
+            state.currentPage = pageName;
+        }
+
+        // 更新进度条
+        function updateProgress() {
+            const progress = ((state.currentQuestion + 1) / questions.length) * 100;
+            progressFill.style.width = `${progress}%`;
+            progressText.textContent = `${state.currentQuestion + 1}/${questions.length}`;
+
+            questionNumber.textContent = `题目 ${state.currentQuestion + 1}`;
+            questionText.textContent = questions[state.currentQuestion].content;
+
+            prevBtn.disabled = state.currentQuestion === 0;
+
+            if (state.answers[state.currentQuestion] !== null) {
+                nextBtn.disabled = false;
+                nextBtn.style.background = "linear-gradient(to right, #e67e22, #d35400)";
+            } else {
+                nextBtn.disabled = true;
+                nextBtn.style.background = "linear-gradient(to right, #f1c40f, #f39c12)";
+            }
+
+            if (state.currentQuestion === questions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'block';
+                submitBtn.disabled = !state.answers.every(answer => answer !== null);
+            } else {
+                nextBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        // 渲染选项
+        function renderOptions() {
+            optionsContainer.innerHTML = '';
+            const currentQuestion = questions[state.currentQuestion];
+            const currentAnswer = state.answers[state.currentQuestion];
+
+            currentQuestion.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = `option ${currentAnswer === index ? 'selected' : ''}`;
+                optionElement.dataset.index = index;
+
+                optionElement.innerHTML = `
+                    <div class="option-label">${String.fromCharCode(65 + index)}</div>
+                    <div class="option-text">${option.value}</div>
+                `;
+
+                optionElement.addEventListener('click', () => {
+                    document.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+
+                    optionElement.classList.add('selected');
+                    state.answers[state.currentQuestion] = index;
+
+                    updateProgress();
+                });
+
+                optionsContainer.appendChild(optionElement);
+            });
+        }
+
+        // 计算总分
+        function calculateScore() {
+            let total = 0;
+            state.answers.forEach((answerIndex, questionIndex) => {
+                if (answerIndex !== null) {
+                    total += questions[questionIndex].options[answerIndex].score;
+                }
+            });
+            state.totalScore = total;
+            return total;
+        }
+
+        // 根据分数获取马系
+        function getHorseTypeByScore(score) {
+            for (const [type, range] of Object.entries(horseTypeRanges)) {
+                if (score >= range.min && score <= range.max) {
+                    return type;
+                }
+            }
+            return 'feng';
+        }
+
+        // 获取随机的马
+        function getRandomHorse(type) {
+            const horses = horsesData[type];
+            if (!horses || horses.length === 0) return null;
+
+            const randomIndex = Math.floor(Math.random() * horses.length);
+            return horses[randomIndex];
+        }
+
+        // 显示结果
+        function showResult() {
+            loadingContainer.style.display = 'none';
+            resultContent.style.display = 'block';
+
+            const score = calculateScore();
+            const horseTypeKey = getHorseTypeByScore(score);
+            const horse = getRandomHorse(horseTypeKey);
+
+            if (!horse) {
+                state.resultHorse = {
+                    name: "千里马",
+                    zhufu: "一日千里，前程似锦，愿你在2026年如千里马般疾驰，抵达梦想的彼岸。",
+                    yuyi: "象征着速度与远见，代表拥有明确目标并能快速达成的人。千里马型的人通常行动力强，目光长远。",
+                    matu: "风系",
+                    appearance: "体型优美，线条流畅，鬃毛如风般飘逸，眼神锐利有神，四肢修长有力，奔跑时如疾风掠过。"
+                };
+            } else {
+                state.resultHorse = horse;
+            }
+
+            //horseName.textContent = state.resultHorse.name;
+            horseType.textContent = state.resultHorse.matu;
+            horseBlessing.textContent = state.resultHorse.zhufu;
+            horseMeaning.textContent = state.resultHorse.yuyi;
+            //horseAppearance.textContent = state.resultHorse.appearance;
+            horseImg.innerHTML = `<img src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/JXaIQy85dsMNJTam4gzDFACb8bT4m1DF0p3QibXff1WGQmcicibI2Mr8JOSibp50VzAaHSic3rIfbBSwhsDNSMC4saYXiazWbvjSUNkg4wdiaDCpibU/640?wx_fmt=webp&amp;from=appmsg&quot;"  alt=""/>`;
+            //horseImg.style.background = horseTypeColors[horseTypeKey] || horseTypeColors.feng;
+            //horseImg.innerHTML = `<i class="fas fa-horse" style="font-size: 100px; color: white; margin-top: 50px;"></i>`;
+        }
+
+        // 重置测试
+        function resetTest() {
+            state.currentQuestion = 0;
+            state.answers = new Array(questions.length).fill(null);
+            state.totalScore = 0;
+            state.resultHorse = null;
+
+            nextBtn.style.display = 'block';
+            submitBtn.style.display = 'none';
+            loadingContainer.style.display = 'block';
+            resultContent.style.display = 'none';
+
+            updateProgress();
+            renderOptions();
+        }
+
+        // 事件监听
+        startBtn.addEventListener('click', function() {
+            showPage('quiz');
+            updateProgress();
+            renderOptions();
+        });
+
+        prevBtn.addEventListener('click', function() {
+            if (state.currentQuestion > 0) {
+                state.currentQuestion--;
+                updateProgress();
+                renderOptions();
+            }
+        });
+
+        nextBtn.addEventListener('click', function() {
+            if (state.currentQuestion < questions.length - 1 && state.answers[state.currentQuestion] !== null) {
+                state.currentQuestion++;
+                updateProgress();
+                renderOptions();
+            }
+        });
+
+        submitBtn.addEventListener('click', function() {
+            const allAnswered = state.answers.every(answer => answer !== null);
+
+            if (!allAnswered) {
+                alert('请先回答所有问题！');
+                return;
+            }
+
+            showPage('result');
+
+            setTimeout(() => {
+                showResult();
+            }, 3000);
+        });
+
+        restartBtn.addEventListener('click', function() {
+            resetTest();
+            showPage('home');
+        });
+
+
+    </script>
 </body>
 </html>

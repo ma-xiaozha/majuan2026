@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -105,7 +105,7 @@
             padding: 25px;
             margin-bottom: 30px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            border-left: 5px solid #e67e22;
+            border-bottom: 5px solid #e67e22;
             position: relative;
             overflow: hidden;
         }
@@ -298,10 +298,10 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(to right, 
-                rgba(255, 255, 255, 0) 0%, 
-                rgba(255, 255, 255, 0.3) 50%, 
-                rgba(255, 255, 255, 0) 100%);
+            background: linear-gradient(to right,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            rgba(255, 255, 255, 0) 100%);
             transform: rotate(30deg);
             animation: shine 3s infinite;
         }
@@ -645,32 +645,38 @@
             z-index: 2;
         }
 
+        /* 优化后的 horse-img-container 样式 - 9:16 竖长方形图片 */
         .horse-img-container {
             text-align: center;
             margin: 20px 0;
             position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .horse-img {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
+            width: 180px; /* 9:16 的宽度 */
+            height: 320px; /* 9:16 的高度 (180 * 16/9 ≈ 320) */
             object-fit: cover;
-            border: 8px solid #f1c40f;
+            border-radius: 12px;
+            border: 4px solid #f1c40f;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             position: relative;
             z-index: 2;
         }
 
+        /* 调整装饰效果以适应竖长方形 */
         .horse-img-container::before {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
+            width: 200px; /* 比图片稍宽 */
+            height: 340px; /* 比图片稍高 */
+            border-radius: 15px;
             background: linear-gradient(135deg, rgba(241, 196, 15, 0.2) 0%, rgba(230, 126, 34, 0.1) 100%);
             z-index: 1;
         }
@@ -681,9 +687,9 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 240px;
-            height: 240px;
-            border-radius: 50%;
+            width: 220px; /* 更大一圈 */
+            height: 360px; /* 更大一圈 */
+            border-radius: 18px;
             border: 2px dashed rgba(230, 126, 34, 0.2);
             z-index: 0;
         }
@@ -789,20 +795,31 @@
             html {
                 font-size: 14px;
             }
-            
+
             .home-title {
                 font-size: 1.8rem;
             }
-            
+
             .result-title {
                 font-size: 1.6rem;
             }
-            
+
+            /* 调整响应式下的图片尺寸 - 9:16 竖长方形 */
             .horse-img {
                 width: 150px;
-                height: 150px;
+                height: 267px; /* 150 * 16/9 ≈ 266.67 */
             }
-            
+
+            .horse-img-container::before {
+                width: 170px;
+                height: 287px;
+            }
+
+            .horse-img-container::after {
+                width: 190px;
+                height: 307px;
+            }
+
             .qr-code {
                 width: 100px;
                 height: 100px;
@@ -813,20 +830,31 @@
             html {
                 font-size: 13px;
             }
-            
+
             .home-title {
                 font-size: 1.6rem;
             }
-            
+
             .result-title {
                 font-size: 1.4rem;
             }
-            
+
+            /* 调整响应式下的图片尺寸 - 9:16 竖长方形 */
             .horse-img {
-                width: 130px;
-                height: 130px;
+                width: 135px;
+                height: 240px; /* 135 * 16/9 = 240 */
             }
-            
+
+            .horse-img-container::before {
+                width: 155px;
+                height: 260px;
+            }
+
+            .horse-img-container::after {
+                width: 175px;
+                height: 280px;
+            }
+
             .qr-container {
                 flex-direction: column;
             }
@@ -834,684 +862,1093 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- 首页 -->
-        <div class="page active" id="home-page">
-            <div class="home-header">
-                <h1 class="home-title">2026你的最佳CP马</h1>
-                <p class="home-subtitle">探索你的性格，找到最适合你的CP马伙伴</p>
-            </div>
-
-            <div class="home-content">
-                <div class="intro-card">
-                    <p class="intro-text">在即将到来的2026年，每个人都希望能找到与自己完美匹配的CP马。这个趣味测试将通过一系列精心设计的问题，分析你的性格特点、喜好和价值观，为你匹配最适合你的CP马类型。</p>
-                    <p class="intro-text">CP马不仅仅是简单的动物，它们代表着不同的性格特质和人生哲学。完成测试后，你将获得专属的CP马分析报告，包括马户籍、马形象、马祝福和马运势，帮助你更深入了解自己。</p>
-                </div>
-
-                <div class="stats-container">
-                    <div class="stats-row">
-                        <div class="stat-box">
-                            <div class="stat-icon">
-                                <i class="fas fa-question-circle"></i>
-                            </div>
-                            <div class="stat-value">15</div>
-                            <div class="stat-label">测试题目</div>
-                        </div>
-
-                        <div class="stat-box">
-                            <div class="stat-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="stat-value">5分钟</div>
-                            <div class="stat-label">完成时间</div>
-                        </div>
-                    </div>
-
-                    <div class="stats-row">
-                        <div class="stat-box">
-                            <div class="stat-icon">
-                                <i class="fas fa-horse-head"></i>
-                            </div>
-                            <div class="stat-value">7大类</div>
-                            <div class="stat-label">CP马种类</div>
-                        </div>
-
-                        <div class="stat-box">
-                            <div class="stat-icon">
-                                <i class="fas fa-calculator"></i>
-                            </div>
-                            <div class="stat-value">智能匹配</div>
-                            <div class="stat-label">匹配算法</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="start-btn-container">
-                    <button class="btn btn-start" id="start-test">开始测试</button>
-                </div>
-            </div>
+<div class="container">
+    <!-- 首页 -->
+    <div class="page active" id="home-page">
+        <div class="home-header">
+            <h1 class="home-title">2026职场牛马鉴定处</h1>
+            <p class="home-subtitle">探索你的性格，找到最适合你的牛马姿态</p>
         </div>
 
-        <!-- 答题页面 -->
-        <div class="page" id="quiz-page">
-            <div class="quiz-header">
-                <h2 class="quiz-title">2026你的最佳CP马</h2>
-                <p class="quiz-subtitle">探索你的性格，找到最适合你的CP马伙伴</p>
+        <div class="home-content">
+            <div class="intro-card">
+                <p class="intro-text">欢迎来到打工人的赛博马厩！这里没有霸道总裁，只有70匹和你一样精通"带薪发呆""优雅摸鱼"的职场神驹，总有一款是你的工位本体！</br></br>不教升职加薪，只送赛博马搭子——反正都是牛马，不如挑匹有趣的！</p>
+                </br>
+                <p class="intro-text">🐴 别卷了！速领你的「职场赛博马籍」！
+                    测测你是「皇阿马」还是「草泥马」？</br></br>
+                    👇点击开启，马厩Wi-Fi已覆盖，带薪如厕即可完成！</p>
             </div>
 
-            <div class="quiz-content">
-                <div class="progress-container">
-                    <div class="progress-text">
-                        <span>答题进度</span>
-                        <span id="progress-text">0/15</span>
+            <div class="stats-container">
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="stat-value">精选15题</div>
+                        <div class="stat-label">职场显微镜</div>
+                        <div class="stat-label">照出你的马样</div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-fill"></div>
+
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-value">轻松3分钟</div>
+                        <div class="stat-label">带薪如厕</div>
+                        <div class="stat-label">测完收工</div>
                     </div>
                 </div>
 
-                <div class="question-container">
-                    <div class="question-number" id="question-number">题目 1</div>
-                    <div class="question-text" id="question-text">这里显示题目内容...</div>
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-horse-head"></i>
+                        </div>
+                        <div class="stat-value">牛马70匹</div>
+                        <div class="stat-label">豪华马厩</div>
+                        <div class="stat-label">总有一匹像你</div>
+                    </div>
 
-                    <div class="options-container" id="options-container">
-                        <!-- 选项将通过JS动态生成 -->
+                    <div class="stat-box">
+                        <div class="stat-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <div class="stat-value">智能匹配</div>
+                        <div class="stat-label">算法精准</div>
+                        <div class="stat-label">老板都没她懂你</div>
                     </div>
                 </div>
-
-                <div class="nav-buttons">
-                    <button class="btn-nav btn-prev" id="prev-btn" disabled>
-                        <i class="fas fa-arrow-left"></i> 上一题
-                    </button>
-                    <button class="btn-nav btn-next" id="next-btn" disabled>
-                        下一题 <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-
-                <button class="btn btn-submit" id="submit-btn">提交答案</button>
             </div>
-        </div>
 
-        <!-- 结果页面 -->
-        <div class="page" id="result-page">
-            <div class="loading-container" id="loading-container">
-                <div class="loading-spinner"></div>
-                <div class="loading-text">正在匹配中，寻找最适合你的CP马...</div>
-            </div>
-
-            <div id="result-content" class="page-result" style="display: none;">
-                <div class="result-header">
-                    <h2 class="result-title">恭喜您！</h2>
-                    <h2 class="result-title">2026选中最佳CP马</h2>
-                </div>
-
-                <div class="result-content">
-                    <div class="horse-details">
-                        <div class="detail-item">
-                            <div class="detail-title">
-                                <i class="fas fa-passport"></i> 马户籍
-                            </div>
-                            <div class="detail-content" id="horse-type"></div>
-                        </div>
-
-                        <div class="detail-item">
-                            <div class="detail-title">
-                                <i class="fas fa-image"></i> 马形象
-                            </div>
-                            <div class="horse-img-container">
-                                <img class="horse-img" src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/JXaIQy85dsMNJTam4gzDFACb8bT4m1DF0p3QibXff1WGQmcicibI2Mr8JOSibp50VzAaHSic3rIfbBSwhsDNSMC4saYXiazWbvjSUNkg4wdiaDCpibU/640?wx_fmt=webp" alt="CP马形象">
-                            </div>
-                            <div class="detail-content" id="horse-appearance"></div>
-                        </div>
-
-                        <div class="detail-item">
-                            <div class="detail-title">
-                                <i class="fas fa-heart"></i> 马祝福
-                            </div>
-                            <div class="detail-content" id="horse-blessing"></div>
-                        </div>
-
-                        <div class="detail-item">
-                            <div class="detail-title">
-                                <i class="fas fa-lightbulb"></i> 马运势
-                            </div>
-                            <div class="detail-content" id="horse-meaning"></div>
-                        </div>
-                    </div>
-
-                    <div class="follow-section">
-                        <h3 class="follow-title">关注我们</h3>
-                        <p class="follow-subtitle">每日更新更多趣味测试</p>
-                        
-                        <div class="qr-container">
-                            <div class="qr-item">
-                                <div class="qr-code">
-                                    <img src="https://mmbiz.qpic.cn/mmbiz_jpg/JXaIQy85dsMNJTam4gzDFACb8bT4m1DF0p3QibXff1WGQmcicibI2Mr8JOSibp50VzAaHSic3rIfbBSwhsDNSMC4saYXiazWbvjSUNkg4wdiaDCpibU/640?wx_fmt=webp" alt="微信公众号二维码">
-                                </div>
-                                <span class="qr-label">微信公众号</span>
-                            </div>
-                            
-                            <div class="qr-item">
-                                <div class="qr-code">
-                                    <img src="https://mmbiz.qpic.cn/mmbiz_jpg/JXaIQy85dsMNJTam4gzDFACb8bT4m1DF0p3QibXff1WGQmcicibI2Mr8JOSibp50VzAaHSic3rIfbBSwhsDNSMC4saYXiazWbvjSUNkg4wdiaDCpibU/640?wx_fmt=webp" alt="小红书二维码">
-                                </div>
-                                <span class="qr-label">小红书</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-restart" id="restart-btn">重新测试</button>
-                </div>
+            <div class="start-btn-container">
+                <button class="btn btn-start" id="start-test">开始测试</button>
             </div>
         </div>
     </div>
 
-    <script>
-        // 测试题目数据
-        const questions = [
-            {
-                no: 1,
-                content: "在周末的闲暇时光，你更喜欢如何度过？",
-                options: [
-                    {value: "宅在家里看书、追剧或打游戏", score: 1},
-                    {value: "与朋友聚会、参加社交活动", score: 3},
-                    {value: "户外运动、探索自然", score: 4},
-                    {value: "学习新技能、提升自己", score: 2}
-                ]
-            }
-            // ,
-            // {
-            //     no: 2,
-            //     content: "你更倾向于用哪种方式解决问题？",
-            //     options: [
-            //         {value: "冷静分析，制定详细计划", score: 2},
-            //         {value: "直觉判断，相信第一感觉", score: 4},
-            //         {value: "寻求他人帮助，集思广益", score: 3},
-            //         {value: "快速行动，在实践中调整", score: 1}
-            //     ]
-            // },
-            // {
-            //     no: 3,
-            //     content: "在团队中，你通常扮演什么角色？",
-            //     options: [
-            //         {value: "领导者，统筹全局", score: 4},
-            //         {value: "执行者，踏实完成任务", score: 1},
-            //         {value: "协调者，促进团队合作", score: 3},
-            //         {value: "创新者，提出新想法", score: 2}
-            //     ]
-            // },
-            // {
-            //     no: 4,
-            //     content: "你更看重以下哪种品质？",
-            //     options: [
-            //         {value: "忠诚可靠，值得信赖", score: 1},
-            //         {value: "聪明机智，反应迅速", score: 3},
-            //         {value: "勇敢无畏，敢于冒险", score: 4},
-            //         {value: "温和友善，善解人意", score: 2}
-            //     ]
-            // },
-            // {
-            //     no: 5,
-            //     content: "面对压力时，你的第一反应是？",
-            //     options: [
-            //         {value: "保持冷静，寻找解决方案", score: 2},
-            //         {value: "感到焦虑，但能逐渐调整", score: 1},
-            //         {value: "寻求支持，与他人分担", score: 3},
-            //         {value: "积极面对，将压力转化为动力", score: 4}
-            //     ]
-            // },
-            // {
-            //     no: 6,
-            //     content: "你认为人生最重要的是什么？",
-            //     options: [
-            //         {value: "家庭和情感的归属", score: 1},
-            //         {value: "事业和成就的实现", score: 4},
-            //         {value: "知识和智慧的积累", score: 2},
-            //         {value: "自由和体验的丰富", score: 3}
-            //     ]
-            // },
-            // {
-            //     no: 7,
-            //     content: "在爱情中，你更重视什么？",
-            //     options: [
-            //         {value: "安全感和稳定性", score: 1},
-            //         {value: "激情和浪漫", score: 4},
-            //         {value: "理解和默契", score: 2},
-            //         {value: "成长和共同进步", score: 3}
-            //     ]
-            // },
-            // {
-            //     no: 8,
-            //     content: "你如何对待新的挑战？",
-            //     options: [
-            //         {value: "谨慎评估，做好准备再尝试", score: 1},
-            //         {value: "充满好奇，乐于尝试新事物", score: 3},
-            //         {value: "积极迎接，视作成长机会", score: 4},
-            //         {value: "依赖经验，用熟悉方法应对", score: 2}
-            //     ]
-            // },
-            // {
-            //     no: 9,
-            //     content: "你希望自己在他人眼中的形象是？",
-            //     options: [
-            //         {value: "可靠稳重的", score: 1},
-            //         {value: "聪明睿智的", score: 2},
-            //         {value: "热情活力的", score: 4},
-            //         {value: "温柔体贴的", score: 3}
-            //     ]
-            // },
-            // {
-            //     no: 10,
-            //     content: "2026年，你最期待的生活变化是？",
-            //     options: [
-            //         {value: "事业有新的突破", score: 4},
-            //         {value: "建立稳定的家庭", score: 1},
-            //         {value: "掌握新的技能", score: 2},
-            //         {value: "结交更多朋友", score: 3}
-            //     ]
-            // },
-            // {
-            //     no: 11,
-            //     content: "你最喜欢的沟通方式是？",
-            //     options: [
-            //         {value: "直接坦诚，开门见山", score: 4},
-            //         {value: "委婉含蓄，照顾对方感受", score: 2},
-            //         {value: "条理清晰，逻辑分明", score: 3},
-            //         {value: "倾听为主，少说多听", score: 1}
-            //     ]
-            // },
-            // {
-            //     no: 12,
-            //     content: "当你情绪低落时，通常如何调节？",
-            //     options: [
-            //         {value: "独自消化，自我调整", score: 1},
-            //         {value: "找朋友倾诉，寻求安慰", score: 3},
-            //         {value: "用运动或旅行转移注意力", score: 4},
-            //         {value: "分析原因，理性解决", score: 2}
-            //     ]
-            // },
-            // {
-            //     no: 13,
-            //     content: "你对未来的规划更倾向于？",
-            //     options: [
-            //         {value: "有明确的五年、十年计划", score: 1},
-            //         {value: "设定大致方向，灵活调整", score: 2},
-            //         {value: "跟随内心，享受当下", score: 4},
-            //         {value: "随机应变，不特别规划", score: 3}
-            //     ]
-            // },
-            // {
-            //     no: 14,
-            //     content: "在团队合作中，你最不能忍受的是？",
-            //     options: [
-            //         {value: "不守信用，推卸责任", score: 1},
-            //         {value: "缺乏创意，墨守成规", score: 4},
-            //         {value: "沟通不畅，各自为政", score: 3},
-            //         {value: "效率低下，拖延进度", score: 2}
-            //     ]
-            // },
-            // {
-            //     no: 15,
-            //     content: "你如何定义成功的人生？",
-            //     options: [
-            //         {value: "家庭幸福，生活安稳", score: 1},
-            //         {value: "实现理想，成就非凡", score: 4},
-            //         {value: "内心平静，精神富足", score: 2},
-            //         {value: "经历丰富，无怨无悔", score: 3}
-            //     ]
-            // }
-        ];
+    <!-- 答题页面 -->
+    <div class="page" id="quiz-page">
+        <div class="quiz-header">
+            <h2 class="quiz-title">2026你的最佳CP马</h2>
+            <p class="quiz-subtitle">探索你的性格，找到最适合你的CP马伙伴</p>
+        </div>
 
-        // CP马数据
-        const horsesData = {
-            feng: [
-                {
-                    name: "千里马",
-                    zhufu: "一日千里，前程似锦，愿你在2026年如千里马般疾驰，抵达梦想的彼岸。",
-                    yuyi: "象征着速度与远见，代表拥有明确目标并能快速达成的人。千里马型的人通常行动力强，目光长远。",
-                    matu: "风系",
-                    appearance: "体型优美，线条流畅，鬃毛如风般飘逸，眼神锐利有神，四肢修长有力，奔跑时如疾风掠过。"
-                },
-                {
-                    name: "追风马",
-                    zhufu: "追风逐日，自由不羁，愿你在2026年如风般自由，追寻心中的方向。",
-                    yuyi: "代表自由与探索精神，象征着不受束缚、勇于探索未知的个性。",
-                    matu: "风系",
-                    appearance: "身姿轻盈，毛色浅灰如云雾，鬃毛和尾巴在奔跑时如飘扬的旗帜，眼神灵动而好奇。"
-                }
-            ],
-            lei: [
-                {
-                    name: "雷霆马",
-                    zhufu: "雷霆万钧，势不可挡，愿你在2026年如雷霆般有力，破除一切障碍。",
-                    yuyi: "象征力量与决断力，代表果断坚决、行动迅猛的性格特点。",
-                    matu: "雷系",
-                    appearance: "体型健壮，肌肉发达，毛色深灰带闪电纹路，眼神坚定有力，奔跑时如雷鸣震撼大地。"
-                },
-                {
-                    name: "震岳马",
-                    zhufu: "稳如泰山，动如雷霆，愿你在2026年如山岳般稳固，如雷霆般有力。",
-                    yuyi: "代表稳定与力量的结合，象征既有坚定立场又能爆发出强大能量的人。",
-                    matu: "雷系",
-                    appearance: "体格魁梧，肩宽背厚，毛色深褐，鬃毛浓密如狮鬃，踏步时地面仿佛都在震动。"
-                }
-            ],
-            dian: [
-                {
-                    name: "闪电马",
-                    zhufu: "电光石火，瞬息万变，愿你在2026年如闪电般迅速，抓住每一个机遇。",
-                    yuyi: "象征速度与变化，代表思维敏捷、能快速适应环境变化的聪明人。",
-                    matu: "电系",
-                    appearance: "体型精悍，毛色银白带蓝色电纹，眼神锐利如电，行动时如闪电划过，留下一道残影。"
-                },
-                {
-                    name: "流光马",
-                    zhufu: "流光溢彩，智慧闪耀，愿你在2026年如电流般敏锐，洞察生活的本质。",
-                    yuyi: "代表智慧与洞察力，象征思维活跃、有敏锐观察力的人。",
-                    matu: "电系",
-                    appearance: "体型匀称，毛色银灰，在光线下呈现流光溢彩的效果，眼睛明亮有神，仿佛能洞察一切。"
-                }
-            ],
-            huo: [
-                {
-                    name: "烈焰马",
-                    zhufu: "热情如火，照亮前路，愿你在2026年如烈焰般炽热，点燃生活的激情。",
-                    yuyi: "象征热情与活力，代表充满激情、能感染他人的性格特点。",
-                    matu: "火系",
-                    appearance: "毛色赤红如火焰，鬃毛和尾巴仿佛跳动的火苗，眼神炽热有神，奔跑时如一团移动的火焰。"
-                },
-                {
-                    name: "熔岩马",
-                    zhufu: "内心炽热，外表沉稳，愿你在2026年如熔岩般有力量，慢慢改变周围的世界。",
-                    yuyi: "代表内在热情与外在沉稳的结合，象征有深厚内涵和持久热情的人。",
-                    matu: "火系",
-                    appearance: "毛色暗红带黑色斑纹，如同冷却的熔岩，眼神深邃，行动从容不迫。"
-                }
-            ],
-            shui: [
-                {
-                    name: "清泉马",
-                    zhufu: "清澈如水，滋润心田，愿你在2026年如清泉般纯净，带来宁静与平和。",
-                    yuyi: "象征纯净与平和，代表内心清澈、能带来安宁与治愈的人。",
-                    matu: "水系",
-                    appearance: "毛色淡蓝如泉水，鬃毛柔顺如水波，眼神温和清澈，行动优雅从容。"
-                },
-                {
-                    name: "海潮马",
-                    zhufu: "胸怀如海，包容万物，愿你在2026年如海潮般有节奏，把握生活的韵律。",
-                    yuyi: "代表包容与适应力，象征胸怀宽广、能适应各种环境的人。",
-                    matu: "水系",
-                    appearance: "毛色深蓝如深海，体型流畅，鬃毛如海浪般起伏，眼神宁静深邃，行动有韵律感。"
-                }
-            ],
-            tu: [
-                {
-                    name: "磐石马",
-                    zhufu: "坚实如石，稳如泰山，愿你在2026年如磐石般稳固，成为他人的依靠。",
-                    yuyi: "象征稳定与可靠，代表值得信赖、有责任感的性格特点。",
-                    matu: "土系",
-                    appearance: "体型敦实，肌肉结实，毛色土黄或褐色，步伐稳健，眼神温和坚定，给人以安全感。"
-                },
-                {
-                    name: "沃土马",
-                    zhufu: "厚德载物，滋养万物，愿你在2026年如沃土般丰饶，让美好生根发芽。",
-                    yuyi: "代表滋养与成长，象征能支持他人成长、有奉献精神的人。",
-                    matu: "土系",
-                    appearance: "毛色深褐带绿色斑点，仿佛长满青苔的沃土，眼神温和包容，行动从容不迫。"
-                }
-            ],
-            mu: [
-                {
-                    name: "森灵马",
-                    zhufu: "生机勃勃，生生不息，愿你在2026年如森林般繁茂，充满生机与希望。",
-                    yuyi: "象征生命力与成长，代表充满活力、不断成长进步的人。",
-                    matu: "木系",
-                    appearance: "毛色翠绿如新生树叶，身上有植物般的纹路，眼神灵动充满生机，行动轻盈如风拂过森林。"
-                },
-                {
-                    name: "古木马",
-                    zhufu: "根深叶茂，智慧沉淀，愿你在2026年如古木般有智慧，在岁月中积累成长。",
-                    yuyi: "代表智慧与沉淀，象征有深厚底蕴、在时间中不断积累的人。",
-                    matu: "木系",
-                    appearance: "毛色深绿带褐色斑纹，如同古老的树皮，眼神深邃有智慧，步伐从容大气。"
-                }
+        <div class="quiz-content">
+            <div class="progress-container">
+                <div class="progress-text">
+                    <span>答题进度</span>
+                    <span id="progress-text">0/15</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-number" id="question-number">题目 1</div>
+                <div class="question-text" id="question-text">这里显示题目内容...</div>
+
+                <div class="options-container" id="options-container">
+                    <!-- 选项将通过JS动态生成 -->
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="btn-nav btn-prev" id="prev-btn" disabled>
+                    <i class="fas fa-arrow-left"></i> 上一题
+                </button>
+                <button class="btn-nav btn-next" id="next-btn" disabled>
+                    下一题 <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <button class="btn btn-submit" id="submit-btn">提交答案</button>
+        </div>
+    </div>
+
+    <!-- 结果页面 -->
+    <div class="page" id="result-page">
+        <div class="loading-container" id="loading-container">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">正在匹配中，寻找最适合你的职场神驹...</div>
+        </div>
+
+        <div id="result-content" class="page-result" style="display: none;">
+            <div class="result-header">
+                <h2 class="result-title">恭喜您！</h2>
+                <h2 class="result-title">2026职场最佳赛博牛马本马</h2>
+            </div>
+
+            <div class="result-content">
+                <div class="horse-details">
+                    <div class="detail-item">
+                        <div class="detail-title">
+                            <i class="fas fa-passport"></i> 马户籍
+                        </div>
+                        <div class="detail-content" id="horse-type"></div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-title">
+                            <i class="fas fa-image"></i> 马形象
+                        </div>
+                        <div class="horse-img-container">
+                            <!-- 图片src将根据matu动态设置 -->
+                            <img class="horse-img" id="horse-img" alt="CP马形象">
+                        </div>
+                        <div class="detail-content" id="horse-appearance"></div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-title">
+                            <i class="fas fa-heart"></i> 马祝福
+                        </div>
+                        <div class="detail-content" id="horse-blessing"></div>
+                    </div>
+
+                    <div class="detail-item">
+                        <div class="detail-title">
+                            <i class="fas fa-lightbulb"></i> 马运势
+                        </div>
+                        <div class="detail-content" id="horse-meaning"></div>
+                    </div>
+                </div>
+
+                <div class="follow-section">
+                    <h3 class="follow-title">扫码关注「马小札」</h3>
+                    <p class="follow-subtitle">你的赛博工位搭子</p>
+                    <p class="follow-subtitle">每日更新：治愈文案 | 犀利梗图 | 生存哲学</p>
+
+                    <div class="qr-container">
+                        <div class="qr-item">
+                            <div class="qr-code">
+                                <img src="images/gongzhonghao.jpg" alt="微信公众号二维码">
+                            </div>
+                            <span class="qr-label">微信公众号</span>
+                        </div>
+
+                        <div class="qr-item">
+                            <div class="qr-code">
+                                <img src="images/xiaohongshu.png" alt="小红书二维码">
+                            </div>
+                            <span class="qr-label">小红书</span>
+                        </div>
+                    </div>
+                    </br>
+                    <p class="follow-subtitle">关注公众号，可获得所有牛马图鉴和小札见面礼</p>
+                </div>
+
+<!--                <button class="btn btn-restart" id="restart-btn">重新测试</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 测试题目数据
+    const questions = [
+        {
+            no: 1,
+            content: "在周末的闲暇时光，你更喜欢如何度过？",
+            options: [
+                {value: "宅在家里看书、追剧或打游戏", score: 1},
+                {value: "与朋友聚会、参加社交活动", score: 3},
+                {value: "户外运动、探索自然", score: 4},
+                {value: "学习新技能、提升自己", score: 2}
             ]
-        };
+        }
+        // ,
+        // {
+        //     no: 2,
+        //     content: "你更倾向于用哪种方式解决问题？",
+        //     options: [
+        //         {value: "冷静分析，制定详细计划", score: 2},
+        //         {value: "直觉判断，相信第一感觉", score: 4},
+        //         {value: "寻求他人帮助，集思广益", score: 3},
+        //         {value: "快速行动，在实践中调整", score: 1}
+        //     ]
+        // },
+        // {
+        //     no: 3,
+        //     content: "在团队中，你通常扮演什么角色？",
+        //     options: [
+        //         {value: "领导者，统筹全局", score: 4},
+        //         {value: "执行者，踏实完成任务", score: 1},
+        //         {value: "协调者，促进团队合作", score: 3},
+        //         {value: "创新者，提出新想法", score: 2}
+        //     ]
+        // },
+        // {
+        //     no: 4,
+        //     content: "你更看重以下哪种品质？",
+        //     options: [
+        //         {value: "忠诚可靠，值得信赖", score: 1},
+        //         {value: "聪明机智，反应迅速", score: 3},
+        //         {value: "勇敢无畏，敢于冒险", score: 4},
+        //         {value: "温和友善，善解人意", score: 2}
+        //     ]
+        // },
+        // {
+        //     no: 5,
+        //     content: "面对压力时，你的第一反应是？",
+        //     options: [
+        //         {value: "保持冷静，寻找解决方案", score: 2},
+        //         {value: "感到焦虑，但能逐渐调整", score: 1},
+        //         {value: "寻求支持，与他人分担", score: 3},
+        //         {value: "积极面对，将压力转化为动力", score: 4}
+        //     ]
+        // },
+        // {
+        //     no: 6,
+        //     content: "你认为人生最重要的是什么？",
+        //     options: [
+        //         {value: "家庭和情感的归属", score: 1},
+        //         {value: "事业和成就的实现", score: 4},
+        //         {value: "知识和智慧的积累", score: 2},
+        //         {value: "自由和体验的丰富", score: 3}
+        //     ]
+        // },
+        // {
+        //     no: 7,
+        //     content: "在爱情中，你更重视什么？",
+        //     options: [
+        //         {value: "安全感和稳定性", score: 1},
+        //         {value: "激情和浪漫", score: 4},
+        //         {value: "理解和默契", score: 2},
+        //         {value: "成长和共同进步", score: 3}
+        //     ]
+        // },
+        // {
+        //     no: 8,
+        //     content: "你如何对待新的挑战？",
+        //     options: [
+        //         {value: "谨慎评估，做好准备再尝试", score: 1},
+        //         {value: "充满好奇，乐于尝试新事物", score: 3},
+        //         {value: "积极迎接，视作成长机会", score: 4},
+        //         {value: "依赖经验，用熟悉方法应对", score: 2}
+        //     ]
+        // },
+        // {
+        //     no: 9,
+        //     content: "你希望自己在他人眼中的形象是？",
+        //     options: [
+        //         {value: "可靠稳重的", score: 1},
+        //         {value: "聪明睿智的", score: 2},
+        //         {value: "热情活力的", score: 4},
+        //         {value: "温柔体贴的", score: 3}
+        //     ]
+        // },
+        // {
+        //     no: 10,
+        //     content: "2026年，你最期待的生活变化是？",
+        //     options: [
+        //         {value: "事业有新的突破", score: 4},
+        //         {value: "建立稳定的家庭", score: 1},
+        //         {value: "掌握新的技能", score: 2},
+        //         {value: "结交更多朋友", score: 3}
+        //     ]
+        // },
+        // {
+        //     no: 11,
+        //     content: "你最喜欢的沟通方式是？",
+        //     options: [
+        //         {value: "直接坦诚，开门见山", score: 4},
+        //         {value: "委婉含蓄，照顾对方感受", score: 2},
+        //         {value: "条理清晰，逻辑分明", score: 3},
+        //         {value: "倾听为主，少说多听", score: 1}
+        //     ]
+        // },
+        // {
+        //     no: 12,
+        //     content: "当你情绪低落时，通常如何调节？",
+        //     options: [
+        //         {value: "独自消化，自我调整", score: 1},
+        //         {value: "找朋友倾诉，寻求安慰", score: 3},
+        //         {value: "用运动或旅行转移注意力", score: 4},
+        //         {value: "分析原因，理性解决", score: 2}
+        //     ]
+        // },
+        // {
+        //     no: 13,
+        //     content: "你对未来的规划更倾向于？",
+        //     options: [
+        //         {value: "有明确的五年、十年计划", score: 1},
+        //         {value: "设定大致方向，灵活调整", score: 2},
+        //         {value: "跟随内心，享受当下", score: 4},
+        //         {value: "随机应变，不特别规划", score: 3}
+        //     ]
+        // },
+        // {
+        //     no: 14,
+        //     content: "在团队合作中，你最不能忍受的是？",
+        //     options: [
+        //         {value: "不守信用，推卸责任", score: 1},
+        //         {value: "缺乏创意，墨守成规", score: 4},
+        //         {value: "沟通不畅，各自为政", score: 3},
+        //         {value: "效率低下，拖延进度", score: 2}
+        //     ]
+        // },
+        // {
+        //     no: 15,
+        //     content: "你如何定义成功的人生？",
+        //     options: [
+        //         {value: "家庭幸福，生活安稳", score: 1},
+        //         {value: "实现理想，成就非凡", score: 4},
+        //         {value: "内心平静，精神富足", score: 2},
+        //         {value: "经历丰富，无怨无悔", score: 3}
+        //     ]
+        // }
+    ];
 
-        // 马系与分数段对应关系
-        const horseTypeRanges = {
-            feng: { min: 15, max: 21 },
-            lei: { min: 22, max: 28 },
-            dian: { min: 29, max: 35 },
-            huo: { min: 36, max: 42 },
-            shui: { min: 43, max: 49 },
-            tu: { min: 50, max: 56 },
-            mu: { min: 57, max: 60 }
-        };
-
-        // 应用状态
-        const state = {
-            currentPage: 'home',
-            currentQuestion: 0,
-            answers: new Array(questions.length).fill(null),
-            totalScore: 0,
-            resultHorse: null
-        };
-
-        // DOM元素
-        const homePage = document.getElementById('home-page');
-        const quizPage = document.getElementById('quiz-page');
-        const resultPage = document.getElementById('result-page');
-        const startBtn = document.getElementById('start-test');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const submitBtn = document.getElementById('submit-btn');
-        const restartBtn = document.getElementById('restart-btn');
-        const questionNumber = document.getElementById('question-number');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const progressText = document.getElementById('progress-text');
-        const progressFill = document.getElementById('progress-fill');
-        const loadingContainer = document.getElementById('loading-container');
-        const resultContent = document.getElementById('result-content');
-        const horseType = document.getElementById('horse-type');
-        const horseBlessing = document.getElementById('horse-blessing');
-        const horseMeaning = document.getElementById('horse-meaning');
-        const horseAppearance = document.getElementById('horse-appearance');
-
-        // 页面切换函数
-        function showPage(pageName) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-
-            if (pageName === 'home') {
-                homePage.classList.add('active');
-            } else if (pageName === 'quiz') {
-                quizPage.classList.add('active');
-            } else if (pageName === 'result') {
-                resultPage.classList.add('active');
+    // CP马数据
+    const horsesData = {
+        "tu": [
+            {
+                "name": "牛马",
+                "zhufu": "耕耘有时，收获有期",
+                "yuyi": "耐力与责任感是你的代名词，勤恳耕耘是你的信条。你像大地一样可靠，是团队的基石。2026年，默默积累的硕果终将显现。请记得：在埋头拉车时，也要抬头看路，适时为自己规划更广阔的草原。",
+                "matu": "images/02niuma.png",
+                "appearance": "土系"
+            },
+            {
+                "name": "摆烂马",
+                "zhufu": "躺得平坦，卷得璀璨",
+                "yuyi": "深谙“以退为进”的生存哲学，擅长在“躺平”的姿态中积蓄能量。2026年，你的战略性休整能带来意外灵感。但要警惕：真正的摆烂是为更好地起跑，别在舒适区里扎了根。",
+                "matu": "images/08bailanma.webp",
+                "appearance": "土系"
+            },
+            {
+                "name": "富贵马",
+                "zhufu": "蹄下有金，心中有秤",
+                "yuyi": "你深知物质丰盈只是表象，真正的“富贵”在于内心的丰盛与选择的自由。2026年，你在创造价值的同时，也将收获回报。切记：让财富流动，方能生生不息。",
+                "matu": "images/11fuguima.webp",
+                "appearance": "土系"
+            },
+            {
+                "name": "平安马",
+                "zhufu": "四蹄踏雪，一生顺遂",
+                "yuyi": "你追求的不是惊心动魄的刺激，而是四平八稳的踏实与长久。你是风暴中最稳定的锚点。2026年，你的存在本身就是一种祝福。稳扎稳打，即是捷径。",
+                "matu": "images/12pinganma.webp",
+                "appearance": "土系"
+            },
+            {
+                "name": "路牙马",
+                "zhufu": "脚踏实地，亦能致远",
+                "yuyi": "你接地气，能在任何环境（比如马路牙子）中找到属于自己的一席之地，务实而坚韧。2026年，你的适应能力将帮你度过波动。在路边休整时，不忘规划前往更舒适“餐厅”的路径。",
+                "matu": "images/38luyama.webp",
+                "appearance": "土系"
+            },
+            {
+                "name": "桶搋马",
+                "zhufu": "疏通万物，通达自在",
+                "yuyi": "你是团队的救火队员与问题解决专家，专门疏通各种“堵塞”与烂摊子。2026年，你的疏通能力将大受欢迎。记得：在疏通外界的同时，也要定期清理自己的情绪管道。",
+                "matu": "images/40tongjuema.webp",
+                "appearance": "土系"
+            },
+            {
+                "name": "桶马",
+                "zhufu": "独处有境，思绪无疆",
+                "yuyi": "你需要并珍视独处的神圣空间（比如马桶时间），在其中进行深度思考或纯粹放空。2026年，保护好你的“王座”时刻，它是你恢复精力与灵感的秘密源泉。独处是为了更好地回归。",
+                "matu": "images/41tongma.webp",
+                "appearance": "土系"
+            },
+            {
+                "name": "斑线马",
+                "zhufu": "规则在心中，脚步自从容",
+                "yuyi": "你生活在规则（斑马线）之中，但内心质疑是否必须等待绿灯。你在遵守与突破之间徘徊。2026年，在看清规则的同时，可以尝试在安全范围内创造属于自己的“过街方式”。",
+                "matu": "images/56banxianma.webp",
+                "appearance": "土系"
+            },
+            {
+                "name": "铃薯马",
+                "zhufu": "深藏不露，一鸣惊人",
+                "yuyi": "你拥有“土遁”天赋，擅长在压力下（工位土壤中）保持安静、储蓄能量，甚至悄悄“发芽”。2026年，允许自己有时“躺平”积蓄力量。你的潜力在于，时机一到，便能破土而出。",
+                "matu": "images/58lingshuma.webp",
+                "appearance": "土系"
+            },
+            {
+                "name": "上到马",
+                "zhufu": "响应如电，决策如山",
+                "yuyi": "你拥有极快的任务响应与形态切换能力，是领导心中的“及时雨”。2026年，你的敏捷性是一大优势。在快速响应之余，也需培养主导节奏的能力，从“响应者”变为“规划者”。",
+                "matu": "images/62shangdaoma.webp",
+                "appearance": "土系"
             }
+        ],
+        "shui": [
+            {
+                "name": "套杆马",
+                "zhufu": "精准出手，满载而归",
+                "yuyi": "你眼光精准，出手果断，善于在复杂局面中牢牢锁定目标。2026年，是你的“命中率”大放异彩之年。成功的关键在于：看准、稳心、然后优雅一击。",
+                "matu": "images/16taoganma.webp",
+                "appearance": "水系"
+            },
+            {
+                "name": "伯庸马",
+                "zhufu": "使命必达，青史留痕",
+                "yuyi": "你身上背负着文化的使命感与“一骑红尘”的紧迫任务，是古典精神在现代职场中的化身。2026年，你的坚持与责任感会带来尊重。但“荔枝”虽好，也需关注自己的“马蹄”损耗。",
+                "matu": "images/43boyongma.webp",
+                "appearance": "水系"
+            },
+            {
+                "name": "代夫马",
+                "zhufu": "魂有远方，身亦能往",
+                "yuyi": "你的灵魂始终向往着诗与远方（如马尔代夫），善于在精神上即时切换场景以获取慰藉。2026年，让这份憧憬化为实际规划的动力。偶尔让灵魂度假，但脚步要踏实走向理想的彼岸。",
+                "matu": "images/44daifuma",
+                "appearance": "水系"
+            },
+            {
+                "name": "冬梅马",
+                "zhufu": "该清则清，心明眼亮",
+                "yuyi": "你擅长使用“注意力屏蔽”或“话题转移”大法，在需要时进入“马什么梅”的状态以保护心神。2026年，这项技能可用于过滤噪音，但面对核心问题与关切之人，请切换回“高清”模式。",
+                "matu": "images/53dongmeima.png",
+                "appearance": "水系"
+            },
+            {
+                "name": "波罗马",
+                "zhufu": "探险家精神，归来仍少年",
+                "yuyi": "你是一位在办公室格子间或甲方需求迷宫中探险的现代行者，永远在寻找“新大陆”或失踪的同事。2026年，你的探索精神宝贵。带上你的“游记”，记录沿途发现，它们可能价值连城。",
+                "matu": "images/57boluoma.png",
+                "appearance": "水系"
+            },
+            {
+                "name": "克笔马",
+                "zhufu": "涂掉压力，绘出新篇",
+                "yuyi": "你掌握着一种快速而直接的解压秘术（涂黑日程表），用最原始的方式对抗秩序带来的压迫感。2026年，找到更多建设性的“涂写”方式，将压抑的能量转化为创造的线条。",
+                "matu": "images/59kebima.webp",
+                "appearance": "水系"
+            },
+            {
+                "name": "白聋马",
+                "zhufu": "左耳进右耳出，快乐心中住",
+                "yuyi": "你精通职场“选择性失聪”艺术，自动过滤PUA杂音，专注内心平和。2026年，建议升级为「智能降噪模式」——该屏蔽时静音，该接单时秒回，让世界噪音为你让路",
+                "matu": "images/69bailongma.webp",
+                "appearance": "水系"
+            }
+        ],
+        "lei": [
+            {
+                "name": "ok马",
+                "zhufu": "松弛有度，自有天地",
+                "yuyi": "你拥有随遇而安的豁达与“没问题”的爽快。你是团队的润滑剂，总能以轻松心态化解压力。2026年，你的灵活性与包容度将成为关键优势。提醒自己：说“OK”的同时，也要清楚自己的边界与核心目标。",
+                "matu": "images/03okma.jpg",
+                "appearance": "雷系"
+            },
+            {
+                "name": "去它马",
+                "zhufu": "心有山海，静默有声",
+                "yuyi": "你的内心思绪万千，关切着远方与世界，但常常选择静默旁观。你拥有深刻的共情力与观察力。2026年，试着将内心的问候转化为行动或表达，你会在连接中发现更大的世界与自我价值。",
+                "matu": "images/07tangpingma.webp",
+                "appearance": "雷系"
+            },
+            {
+                "name": "如意马",
+                "zhufu": "心想事成，马到功成",
+                "yuyi": "你懂得“心想事成”的秘诀，在于清醒的认知、灵活的策略与持续的行动。2026年，你的心愿蓝图有望清晰呈现。请行动：将“如”意变为“入”实。",
+                "matu": "images/14ruyima.webp",
+                "appearance": "雷系"
+            },
+            {
+                "name": "发财马",
+                "zhufu": "财路如鬃，茂盛绵长",
+                "yuyi": "你对财富的嗅觉敏锐，但更明白“发财”是过程而非终点，是能力的自然结果。2026年，专注创造价值，财富会追随你。记住：最好的投资，永远是自己。",
+                "matu": "images/15facaima.webp",
+                "appearance": "雷系"
+            },
+            {
+                "name": "凭什马",
+                "zhufu": "锋芒所向，皆有回响",
+                "yuyi": "你兼具闪电般的行动力与敏锐洞察，擅长应对挑战，总在关键时刻扛起责任。2026年，你适合引领团队攻坚克难。切忌独自硬扛——记得信赖你的族群，共享荣耀与压力。",
+                "matu": "images/17pingshenma.webp",
+                "appearance": "雷系"
+            },
+            {
+                "name": "饿了马",
+                "zhufu": "食人间烟火，怀星辰之梦",
+                "yuyi": "你务实而直接，深谙“身体是革命的本钱”。你懂得优先满足基本需求，以此积蓄前进的能量。2026年，是夯实基础、滋养身心的好年份。记住：填饱肚子后，别忘了抬头仰望星空，滋养梦想。",
+                "matu": "images/18elema.webp",
+                "appearance": "雷系"
+            },
+            {
+                "name": "阿尼马",
+                "zhufu": "幽默是盔甲，真诚是剑",
+                "yuyi": "你总带着一丝桀骜不驯的调侃与清醒，以独特的幽默感面对世界。你是群体中的气氛调节者与真相帝。2026年，你的犀利视角可能戳破泡沫，带来改变。注意方式，让幽默成为智慧，而非尖刺。",
+                "matu": "images/20anima.png",
+                "appearance": "雷系"
+            },
+            {
+                "name": "二维马",
+                "zhufu": "码上成功，马上自由",
+                "yuyi": "你轻松驾驭数字化世界，是连接虚拟与现实的桥梁。你拥有“躺赢”的智慧与轻松获客的能力。2026年，线上领域是你的主场。切记：在扫码的世界里，别忘了保留线下真实的温度与连接。",
+                "matu": "images/21erweima.png",
+                "appearance": "雷系"
+            },
+            {
+                "name": "弼温马",
+                "zhufu": "温良如玉，稳如磐石",
+                "yuyi": "名称中带着谦逊与温暖，如同可靠的副手与支持者，在幕后提供稳定力量。2026年，你的忠诚与辅助能力将备受珍视。请相信：温暖的支撑本身就是一种强大的领导力。",
+                "matu": "images/28biwenma.png",
+                "appearance": "雷系"
+            },
+            {
+                "name": "沙琪马",
+                "zhufu": "生活 layered，甜而不腻",
+                "yuyi": "你甜美而富有层次，是能够带来愉悦与治愈的存在。你懂得生活的甜头，也乐于分享。2026年，多发挥你连接人与人的“甜味”特质，但也要注意：别让“甜”掩盖了你内在的坚实力量。",
+                "matu": "images/29shaqima.png",
+                "appearance": "雷系"
+            },
+            {
+                "name": "大哈马",
+                "zhufu": "该忘就忘，快乐至上",
+                "yuyi": "你拥有“选择性遗忘”的快乐天赋，能自动过滤烦恼，聚焦当下的轻松。2026年，这种乐观是你的宝贵财富。不过，对于重要的承诺与责任，可能需要一个“外置硬盘”来加强记忆。",
+                "matu": "images/37dahama.webp",
+                "appearance": "雷系"
+            },
+            {
+                "name": "巴卡马",
+                "zhufu": "仪式感满，节奏自控",
+                "yuyi": "你拥有神秘的仪式感，你的出现（或上线）本身就是一种信号或状态的切换。你遵循着自己内心的节奏。2026年，善用你的“仪式”来管理精力与时间，但要确保信号清晰，避免他人误解。",
+                "matu": "images/48bakama.webp",
+                "appearance": "雷系"
+            },
+            {
+                "name": "蜂窝马",
+                "zhufu": "群处守心，独处守神",
+                "yuyi": "深你知群体（工作群）能量的巨大与危险，懂得何时参与，何时远离。你敏感于群体的情绪波动。2026年，做好“防蛰”措施，在必要的连接与自我保护之间找到精妙的平衡。",
+                "matu": "images/51fengwoma.webp",
+                "appearance": "雷系"
+            },
+            {
+                "name": "成工马",
+                "zhufu": "马上行动，功到自成",
+                "yuyi": "你的名字寄托着“马到成功”的美好祝愿，但现实是立刻投入行动的“打工人”。你在理想与现实间快速切换。2026年，每一次“马上”的行动，都是在为真正的“成功”铺路。步履不停。",
+                "matu": "images/52chenggongma.png",
+                "appearance": "雷系"
+            },
+            {
+                "name": "里奥马",
+                "zhufu": "闯关升级，金币满囊",
+                "yuyi": "你将日常的跋涉视为一场充满未知挑战的冒险（或顶蘑菇游戏），在一次次“跳跃”和“撞击”中成长。2026年，继续你的奥德赛，每个关卡的经验值都在让你变强。记得，有时奖励藏在砖块里。",
+                "matu": "images/54liaoma1.webp",
+                "appearance": "雷系"
+            }
+        ],
+        "huo": [
+            {
+                "name": "罗马",
+                "zhufu": "心之所向，路皆可达",
+                "yuyi": "你目标明确，坚信条条大路通向你心中的理想国。你拥有战略家的视野和开拓者的勇气。2026年，是开辟新航道的绝佳时机。谨记：道路千万条，有时绕行是为了更好地抵达，保持弹性。",
+                "matu": "images/04luoma.png",
+                "appearance": "火系"
+            },
+            {
+                "name": "邀请马",
+                "zhufu": "函至福来，门庭若市",
+                "yuyi": "你天生的社交催化剂与机会联结者，总能用真诚的姿态打开新的大门。2026年，你的链接能力将创造重要机遇。请记得：发送邀请时，也要为自己保留“应邀而来”的宝贵时间。",
+                "matu": "images/09yaoqingma.webp",
+                "appearance": "火系"
+            },
+            {
+                "name": "王子马",
+                "zhufu": "不待白马，自成传奇",
+                "yuyi": "你自带优雅光环与天生的责任感，无需等待拯救，而是主动开拓疆界的领导者。2026年，是树立你独特领导风格的一年。记住：真正的王子气度，在于为他人搭建舞台。",
+                "matu": "images/10wangzima.webp",
+                "appearance": "火系"
+            },
+            {
+                "name": "皇阿马",
+                "zhufu": "执掌一方，亦怀天下",
+                "yuyi": "你天生拥有领导气场与大局观，在领域中自成一方天地。你懂得抓大放小的艺术。2026年，你的权威与经验将备受倚重。请注意：真正的领导力在于赋能与倾听，偶尔也要走进“臣民”中间。",
+                "matu": "images/19huangama.webp",
+                "appearance": "火系"
+            },
+            {
+                "name": "头马",
+                "zhufu": "领跑有方，追随者众",
+                "yuyi": "你天生拥有领跑者的担当与远见，是族群的方向与信心所在。2026年，带领团队突破舒适区是你的使命。请谨记：伟大的头马，懂得何时在前，何时在侧。",
+                "matu": "images/25touma.png",
+                "appearance": "火系"
+            },
+            {
+                "name": "亚逊马",
+                "zhufu": "Prime 级速度，会员级体验",
+                "yuyi": "你在效率至上的丛林中精准穿行，是可靠与速度的代名词。你深刻理解现代服务的法则。2026年，提升个人效率与交付质量是你的主题。记住：在追求Prime服务他人的同时，别忘了给自己充会员。",
+                "matu": "images/30yaxunma.png",
+                "appearance": "火系"
+            },
+            {
+                "name": "甲线马",
+                "zhufu": "自律之光，终将闪耀",
+                "yuyi": "你追求美好的形体与健康，即便理想暂时被现实（脂肪或毛衣）覆盖。2026年，是让“马甲线”若隐若现、逐步清晰的一年。无论是身体还是事业目标，持续的微小努力终将显现。",
+                "matu": "images/36jiaxianma.webp",
+                "appearance": "火系"
+            },
+            {
+                "name": "宝马",
+                "zhufu": "心有所护，驰骋有度",
+                "yuyi": "你内心住着一个既需要呵护（宝宝）又渴望独立驰骋的矛盾体。你追求品质与速度，但也渴望被理解。2026年，平衡内在的“宝宝”与外在的“座驾”，你将实现优雅而有力的奔驰。",
+                "matu": "images/45baoma.webp",
+                "appearance": "火系"
+            },
+            {
+                "name": "爱仕马",
+                "zhufu": "爱是终极奢华",
+                "yuyi": "你将“爱”本身视为最高级的奢侈品与驱动力。你追求的不是简单的拥有，而是深度的情感连接与品质体验。2026年，被爱包围的你，也将成为爱的散发源。真正的奢华，是爱与时间的积累。",
+                "matu": "images/55aishima.png",
+                "appearance": "火系"
+            }
+        ],
+        "guang": [
+            {
+                "name": "摇摇马",
+                "zhufu": "永葆童心，快乐摇摆",
+                "yuyi": "你永远保持着童心与乐观，在起伏中寻找平衡与乐趣。你能为周围带来轻松的摇摆节奏。2026年，适合从事与创意、娱乐相关的领域。请注意：在摇摆中也要稳住重心，欢乐之余需找到持续的支点。",
+                "matu": "images/06yaoyaoma.webp",
+                "appearance": "光系"
+            },
+            {
+                "name": "吉祥马",
+                "zhufu": "吉星高照，祥云随行",
+                "yuyi": "你是行走的福兆与乐观的化身，所到之处总能为他人带来积极的心理暗示。2026年，你的正能量磁场将吸引好运。但请注意：真正的吉祥，源于脚踏实地的善良。",
+                "matu": "images/13jixiangma.webp",
+                "appearance": "光系"
+            },
+            {
+                "name": "杀鸡马",
+                "zhufu": "身心舒展，周周无忧",
+                "yuyi": "你深谙疗愈之道，懂得通过物理或心灵的“按摩”来释放压力、重启状态。2026年，自我关怀与为他人提供情绪价值是你的重要课题。记住：治愈他人时，也要彻底清空自己的“班气”。",
+                "matu": "images/35shajima.webp",
+                "appearance": "光系"
+            },
+            {
+                "name": "卡龙马",
+                "zhufu": "甜染时光，治愈万物",
+                "yuyi": "你擅长为平淡的生活添加一抹甜美的色彩，是治愈系的代表。你用“糖分”和美感对抗世界的灰暗。2026年，多创造和分享你的“甜”与“色”，但也要注意内在营养的均衡。",
+                "matu": "images/46kalongma.webp",
+                "appearance": "光系"
+            },
+            {
+                "name": "奇朵马",
+                "zhufu": "苦中作甜，香醇自成",
+                "yuyi": "你懂得生活如咖啡，苦涩中需要自己调入一份焦糖的甜味与奶泡的绵密。你是品味复杂滋味的大师。2026年，主动调配你生活的比例，即使苦是基底，你也能让它变得香醇可口。",
+                "matu": "images/47qiduoma.webp",
+                "appearance": "光系"
+            },
+            {
+                "name": "神笔马",
+                "zhufu": "妙笔生花，画梦成真",
+                "yuyi": "你拥有化想象为现实的渴望与潜力，渴望一笔改变现状（比如考勤表）。2026年，将你的创造力应用于构建，而非单纯的涂改。你手中的“笔”，可以画出更美好的蓝图。",
+                "matu": "images/50shenbima.webp",
+                "appearance": "光系"
+            },
+            {
+                "name": "上有马",
+                "zhufu": "心念所至，马上实现",
+                "yuyi": "你是“马上体”的终极信徒，永远对未来怀有美好的、即刻实现的期盼。乐观是你的超能力。2026年，让“马上有…”的念想转化为“马上做…”的行动，梦想会加速照进现实。",
+                "matu": "images/61shangyouma.webp",
+                "appearance": "光系"
+            },
+            {
+                "name": "戏团马",
+                "zhufu": "人生如戏，你要尽兴",
+                "yuyi": "你是一位全能的表演艺术家，在职场舞台上熟练切换角色，完成高难度“演出”。2026年，你的多才多艺会收获掌声。记得在谢幕后，卸下妆彩，做回最舒服的自己，那里才是力量的源泉。",
+                "matu": "images/63xituanma.webp",
+                "appearance": "光系"
+            },
+            {
+                "name": "有钱马",
+                "zhufu": "梦里有金，脚下有路",
+                "yuyi": "你梦想的骏马驰骋在财务自由的草原上，这梦想为你提供着无尽的动力与慰藉。2026年，让金色的梦想指引你制定务实的计划。每一步向它的靠近，都比空想更有力。",
+                "matu": "images/66youqianma.webp",
+                "appearance": "光系"
+            },
+            {
+                "name": "蹄糕马",
+                "zhufu": "小确幸常伴，大满足常有",
+                "yuyi": "你是务实又可爱的享乐主义者，深信“马上有糕吃”是当下最实在的幸福。你擅长发现并创造小而确定的快乐。2026年，继续用这些“小糕点”滋润生活。甜蜜的积累，终会酿成丰盛。",
+                "matu": "images/67tigaoma.png",
+                "appearance": "光系"
+            }
+        ],
+        "feng": [
+            {
+                "name": "班马",
+                "zhufu": "愿你独特，更愿你自由",
+                "yuyi": "你在规则的斑纹下跳动着一颗向往自由的心，擅于在平凡中制造惊喜，总能为群体带来轻松的氛围。2026年，你的独特视角将大放异彩，适合在跨界项目中崭露头角。切记：不必刻意融入条纹，你的本色就是最美的风景。",
+                "matu": "images/01banma.webp",
+                "appearance": "风系"
+            },
+            {
+                "name": "马尾",
+                "zhufu": "甩开烦恼，顺风飞扬",
+                "yuyi": "你利落、洒脱，总能顺应趋势，让事情变得顺利。你擅长梳理杂乱，带来清新与秩序。2026年，绑起你的“马尾”，果断决策，将能乘风破浪。记住：顺风时高扬，逆风时则需坚韧。",
+                "matu": "images/22mawei.png",
+                "appearance": "风系"
+            },
+            {
+                "name": "马头",
+                "zhufu": "昂首阔步，前程似锦",
+                "yuyi": "你是方向的指引者，思维的领航员。摸摸你的头，总能带来灵感与好运。2026年，是你运用智慧与远见，为个人或团队“抬头”领路的一年。注意：引领方向时，也需留意脚下的道路。",
+                "matu": "images/23matou.png",
+                "appearance": "风系"
+            },
+            {
+                "name": "小驹马",
+                "zhufu": "跃向山海，无拘无碍",
+                "yuyi": "你心中燃烧着对世界无尽的好奇与对自由的渴望，不愿被束缚。2026年，是你探索、成长与拓展视野的黄金期。勇敢去闯，但也要记得：真正的自由源于内心的笃定，而非无尽的流浪。",
+                "matu": "images/26xiaojuma.webp",
+                "appearance": "风系"
+            },
+            {
+                "name": "飙马",
+                "zhufu": "纵情驰骋，安全抵达",
+                "yuyi": "你热爱速度与激情，渴望突破极限，在风驰电掣中感受存在。2026年，你可能会迎来需要全力冲刺的机遇。请系好“安全带”：明确赛道，控制节奏，才能安全抵达终点。",
+                "matu": "images/27kuangbiaoma.png",
+                "appearance": "风系"
+            },
+            {
+                "name": "拉蒂马",
+                "zhufu": "优雅切换，自在由心",
+                "yuyi": "你优雅与实用在你身上并存，能在不同场景与身份间丝滑切换。你懂得何时该全速前进，何时该保存能量。2026年，平衡事业与生活、身份与自我，是你的核心课题。油门与刹车，都是艺术。",
+                "matu": "images/31ladima.webp",
+                "appearance": "风系"
+            },
+            {
+                "name": "拉松马",
+                "zhufu": "步履不停，终抵所愿",
+                "yuyi": "你耐力非凡，懂得持久战的真谛，目标明确——终点即是下班（或任何解脱点）。2026年，这是一场考验意志的长跑。找到你的节奏与补给点，记住：重要的不是速度，而是抵达。",
+                "matu": "images/33lasongma.webp",
+                "appearance": "风系"
+            },
+            {
+                "name": "路杀马",
+                "zhufu": "目标明确，一路狂飙",
+                "yuyi": "你的目标感极强，一旦锁定“回家干饭”等目标，便心无旁骛、一往无前。2026年，这种专注力能助你高效达成关键任务。请确保你的“油门”对准的是真正值得冲刺的目标。",
+                "matu": "images/39lushama.webp",
+                "appearance": "风系"
+            },
+            {
+                "name": "千里马",
+                "zhufu": "伯乐常在，前程千里",
+                "yuyi": "你的才华与潜力毋庸置疑，但也在等待或呼唤着识货的伯乐与合理的回报。2026年，是展现你“日行千里”实力的好时机。主动嘶鸣，吸引伯乐，同时也要明辨真正的赏识与单纯的利用。",
+                "matu": "images/42qianlima.webp",
+                "appearance": "风系"
+            },
+            {
+                "name": "蹄声马",
+                "zhufu": "听风辨向，蹄下生花",
+                "yuyi": "你对声音极度敏感，善于分辨是自由的召唤还是责任的步调。这让你时而振奋，时而警觉。2026年，锻炼你的“听辨”能力，在杂音中听清真正属于自己的鼓点，并随之起舞。",
+                "matu": "images/49tishengma.webp",
+                "appearance": "风系"
+            },
+            {
+                "name": "前蹄马",
+                "zhufu": "蹄疾步稳，踏雪无痕",
+                "yuyi": "你深谙职场“常在河边走”的风险，时刻保持警醒，但偶尔也享受“湿鞋”的刺激。2026年，你的经验能帮你规避大部分风险。偶尔的“摸鱼”是调剂，但需清楚水温和水深。",
+                "matu": "images/60qiantima.png",
+                "appearance": "风系"
+            },
+            {
+                "name": "尾辫马",
+                "zhufu": "一扎冲天，气场全开",
+                "yuyi": "你相信仪式感的力量，一个简单的动作（扎起头发）就能切换状态、提升气场。2026年，善用你的“开关”仪式，快速进入战斗或专注状态。记住，气场源于内心的确认，发型只是助攻。",
+                "matu": "images/64weibianma.webp",
+                "appearance": "风系"
+            },
+            {
+                "name": "草泥马",
+                "zhufu": "优雅怼人，快乐奔腾",
+                "yuyi": "你以蓬松不羁的外表达意，内心却敏感而柔软，面对荒诞现实总能优雅地“怼”出真我。2026年，你的幽默是化解冲突的良药。请保持这份不羁的温柔——你的绒毛是盔甲，也是拥抱世界的温度。",
+                "matu": "images/68caonima.webp",
+                "appearance": "风系"
+            }
+        ],
+        "an": [
+            {
+                "name": "木马",
+                "zhufu": "守护初心，破界前行",
+                "yuyi": "你的外表看似寻常，内在却充满意想不到的巧思与能量。你擅于深入“系统”，带来变革或惊喜。2026年，你的颠覆性想法有望打破僵局。但请牢记：真正的力量在于建设而非破坏，明确你的初心。",
+                "matu": "images/05muma.webp",
+                "appearance": "暗系"
+            },
+            {
+                "name": "马屁",
+                "zhufu": "妙语连珠，步步高升",
+                "yuyi": "你深谙人际关系的微妙艺术，擅长润滑沟通，是职场的高情商代表。2026年，这项技能将为你打开许多方便之门。但请牢记：真正的认可源于实力与真诚，技巧应为桥梁，而非目的。",
+                "matu": "images/24mapi.png",
+                "appearance": "暗系"
+            },
+            {
+                "name": "赛克马",
+                "zhufu": "该糊就糊，该清则清",
+                "yuyi": "你拥有强大的“模糊”与“保护”机制，懂得为信息分级，守护边界与隐私。2026年，这项技能在信息过载的时代愈发珍贵。提醒：在保护自己的同时，也要对值得的人保持适当的“高清”与坦诚。",
+                "matu": "images/32saikema.webp",
+                "appearance": "暗系"
+            },
+            {
+                "name": "后炮马",
+                "zhufu": "先见之明，皆成预案",
+                "yuyi": "你拥有出色的复盘与分析能力，总能从事后视角洞察关键。2026年，你的这项能力可用于风险预防与策略优化。但要警惕：将洞察力用于事前规划而非事后指责，你会更受欢迎。",
+                "matu": "images/34houpaoma.webp",
+                "appearance": "暗系"
+            },
+            {
+                "name": "屁精马",
+                "zhufu": "妙语连珠，更需真心",
+                "yuyi": "你精通人际互动的微妙之处，懂得赞美与附和作为一种社交工具的价值。2026年，这门“艺术”用得好可润滑关系。但核心在于真诚，否则“精”于表面，难获真心。",
+                "matu": "images/65pijingma.png",
+                "appearance": "暗系"
+            },
+            {
+                "name": "黑马",
+                "zhufu": "黑得纯粹，赢得漂亮",
+                "yuyi": "你潜伏时像隐形墨水，爆发时如深夜闪电。别人在卷KPI时，你在默默升级系统。2026年，请继续保持这种「低调发育」的节奏——毕竟真正的王者，从来不是海选冠军",
+                "matu": "images/70heima.webp",
+                "appearance": "暗系"
+            }
+        ]
+    };
 
-            state.currentPage = pageName;
+    // 马系与分数段对应关系
+    const horseTypeRanges = {
+        feng: { min: 15, max: 21 },
+        lei: { min: 22, max: 28 },
+        dian: { min: 29, max: 35 },
+        huo: { min: 36, max: 42 },
+        shui: { min: 43, max: 49 },
+        tu: { min: 50, max: 56 },
+        mu: { min: 57, max: 60 }
+    };
+
+    // 应用状态
+    const state = {
+        currentPage: 'home',
+        currentQuestion: 0,
+        answers: new Array(questions.length).fill(null),
+        totalScore: 0,
+        resultHorse: null
+    };
+
+    // DOM元素
+    const homePage = document.getElementById('home-page');
+    const quizPage = document.getElementById('quiz-page');
+    const resultPage = document.getElementById('result-page');
+    const startBtn = document.getElementById('start-test');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const restartBtn = document.getElementById('restart-btn');
+    const questionNumber = document.getElementById('question-number');
+    const questionText = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('options-container');
+    const progressText = document.getElementById('progress-text');
+    const progressFill = document.getElementById('progress-fill');
+    const loadingContainer = document.getElementById('loading-container');
+    const resultContent = document.getElementById('result-content');
+    const horseType = document.getElementById('horse-type');
+    const horseBlessing = document.getElementById('horse-blessing');
+    const horseMeaning = document.getElementById('horse-meaning');
+    const horseAppearance = document.getElementById('horse-appearance');
+    const horseImg = document.getElementById('horse-img'); // 新增：获取图片元素
+
+    // 页面切换函数
+    function showPage(pageName) {
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+
+        if (pageName === 'home') {
+            homePage.classList.add('active');
+        } else if (pageName === 'quiz') {
+            quizPage.classList.add('active');
+        } else if (pageName === 'result') {
+            resultPage.classList.add('active');
         }
 
-        // 更新进度条
-        function updateProgress() {
-            const progress = ((state.currentQuestion + 1) / questions.length) * 100;
-            progressFill.style.width = `${progress}%`;
-            progressText.textContent = `${state.currentQuestion + 1}/${questions.length}`;
+        state.currentPage = pageName;
+    }
 
-            questionNumber.textContent = `题目 ${state.currentQuestion + 1}`;
-            questionText.textContent = questions[state.currentQuestion].content;
+    // 更新进度条
+    function updateProgress() {
+        const progress = ((state.currentQuestion + 1) / questions.length) * 100;
+        progressFill.style.width = `${progress}%`;
+        progressText.textContent = `${state.currentQuestion + 1}/${questions.length}`;
 
-            prevBtn.disabled = state.currentQuestion === 0;
+        questionNumber.textContent = `题目 ${state.currentQuestion + 1}`;
+        questionText.textContent = questions[state.currentQuestion].content;
 
-            if (state.answers[state.currentQuestion] !== null) {
-                nextBtn.disabled = false;
-                nextBtn.style.background = "linear-gradient(to right, #e67e22, #d35400)";
-            } else {
-                nextBtn.disabled = true;
-                nextBtn.style.background = "linear-gradient(to right, #f1c40f, #f39c12)";
-            }
+        prevBtn.disabled = state.currentQuestion === 0;
 
-            if (state.currentQuestion === questions.length - 1) {
-                nextBtn.style.display = 'none';
-                submitBtn.style.display = 'block';
-                submitBtn.disabled = !state.answers.every(answer => answer !== null);
-            } else {
-                nextBtn.style.display = 'block';
-                submitBtn.style.display = 'none';
-            }
+        if (state.answers[state.currentQuestion] !== null) {
+            nextBtn.disabled = false;
+            nextBtn.style.background = "linear-gradient(to right, #e67e22, #d35400)";
+        } else {
+            nextBtn.disabled = true;
+            nextBtn.style.background = "linear-gradient(to right, #f1c40f, #f39c12)";
         }
 
-        // 渲染选项
-        function renderOptions() {
-            optionsContainer.innerHTML = '';
-            const currentQuestion = questions[state.currentQuestion];
-            const currentAnswer = state.answers[state.currentQuestion];
+        if (state.currentQuestion === questions.length - 1) {
+            nextBtn.style.display = 'none';
+            submitBtn.style.display = 'block';
+            submitBtn.disabled = !state.answers.every(answer => answer !== null);
+        } else {
+            nextBtn.style.display = 'block';
+            submitBtn.style.display = 'none';
+        }
+    }
 
-            currentQuestion.options.forEach((option, index) => {
-                const optionElement = document.createElement('div');
-                optionElement.className = `option ${currentAnswer === index ? 'selected' : ''}`;
-                optionElement.dataset.index = index;
+    // 渲染选项
+    function renderOptions() {
+        optionsContainer.innerHTML = '';
+        const currentQuestion = questions[state.currentQuestion];
+        const currentAnswer = state.answers[state.currentQuestion];
 
-                optionElement.innerHTML = `
+        currentQuestion.options.forEach((option, index) => {
+            const optionElement = document.createElement('div');
+            optionElement.className = `option ${currentAnswer === index ? 'selected' : ''}`;
+            optionElement.dataset.index = index;
+
+            optionElement.innerHTML = `
                     <div class="option-label">${String.fromCharCode(65 + index)}</div>
                     <div class="option-text">${option.value}</div>
                 `;
 
-                optionElement.addEventListener('click', () => {
-                    document.querySelectorAll('.option').forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-
-                    optionElement.classList.add('selected');
-                    state.answers[state.currentQuestion] = index;
-
-                    updateProgress();
+            optionElement.addEventListener('click', () => {
+                document.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
                 });
 
-                optionsContainer.appendChild(optionElement);
+                optionElement.classList.add('selected');
+                state.answers[state.currentQuestion] = index;
+
+                updateProgress();
             });
-        }
 
-        // 计算总分
-        function calculateScore() {
-            let total = 0;
-            state.answers.forEach((answerIndex, questionIndex) => {
-                if (answerIndex !== null) {
-                    total += questions[questionIndex].options[answerIndex].score;
-                }
-            });
-            state.totalScore = total;
-            return total;
-        }
+            optionsContainer.appendChild(optionElement);
+        });
+    }
 
-        // 根据分数获取马系
-        function getHorseTypeByScore(score) {
-            for (const [type, range] of Object.entries(horseTypeRanges)) {
-                if (score >= range.min && score <= range.max) {
-                    return type;
-                }
+    // 计算总分
+    function calculateScore() {
+        let total = 0;
+        state.answers.forEach((answerIndex, questionIndex) => {
+            if (answerIndex !== null) {
+                total += questions[questionIndex].options[answerIndex].score;
             }
-            return 'feng';
-        }
+        });
+        state.totalScore = total;
+        return total;
+    }
 
-        // 获取随机的马
-        function getRandomHorse(type) {
-            const horses = horsesData[type];
-            if (!horses || horses.length === 0) return null;
-
-            const randomIndex = Math.floor(Math.random() * horses.length);
-            return horses[randomIndex];
-        }
-
-        // 显示结果
-        function showResult() {
-            loadingContainer.style.display = 'none';
-            resultContent.style.display = 'block';
-
-            const score = calculateScore();
-            const horseTypeKey = getHorseTypeByScore(score);
-            const horse = getRandomHorse(horseTypeKey);
-
-            if (!horse) {
-                state.resultHorse = {
-                    name: "千里马",
-                    zhufu: "一日千里，前程似锦，愿你在2026年如千里马般疾驰，抵达梦想的彼岸。",
-                    yuyi: "象征着速度与远见，代表拥有明确目标并能快速达成的人。千里马型的人通常行动力强，目光长远。",
-                    matu: "风系",
-                    appearance: "体型优美，线条流畅，鬃毛如风般飘逸，眼神锐利有神，四肢修长有力，奔跑时如疾风掠过。"
-                };
-            } else {
-                state.resultHorse = horse;
+    // 根据分数获取马系
+    function getHorseTypeByScore(score) {
+        for (const [type, range] of Object.entries(horseTypeRanges)) {
+            if (score >= range.min && score <= range.max) {
+                return type;
             }
+        }
+        return 'feng';
+    }
 
-            horseType.textContent = state.resultHorse.matu;
-            horseBlessing.textContent = state.resultHorse.zhufu;
-            horseMeaning.textContent = state.resultHorse.yuyi;
-            //horseAppearance.textContent = state.resultHorse.appearance;
+    // 获取随机的马
+    function getRandomHorse(type) {
+        const horses = horsesData[type];
+        if (!horses || horses.length === 0) return null;
+
+        const randomIndex = Math.floor(Math.random() * horses.length);
+        return horses[randomIndex];
+    }
+
+    // 显示结果
+    function showResult() {
+        loadingContainer.style.display = 'none';
+        resultContent.style.display = 'block';
+
+        const score = calculateScore();
+        const horseTypeKey = getHorseTypeByScore(score);
+        const horse = getRandomHorse(horseTypeKey);
+
+        if (!horse) {
+            state.resultHorse = {
+                name: "千里马",
+                zhufu: "一日千里，前程似锦，愿你在2026年如千里马般疾驰，抵达梦想的彼岸。",
+                yuyi: "象征着速度与远见，代表拥有明确目标并能快速达成的人。千里马型的人通常行动力强，目光长远。",
+                matu: "风系",
+                appearance: "体型优美，线条流畅，鬃毛如风般飘逸，眼神锐利有神，四肢修长有力，奔跑时如疾风掠过。"
+            };
+        } else {
+            state.resultHorse = horse;
         }
 
-        // 重置测试
-        function resetTest() {
-            state.currentQuestion = 0;
-            state.answers = new Array(questions.length).fill(null);
-            state.totalScore = 0;
-            state.resultHorse = null;
+        // 设置各个字段的值
+        horseType.textContent = state.resultHorse.name;
+        horseBlessing.textContent = state.resultHorse.zhufu;
+        horseMeaning.textContent = state.resultHorse.yuyi;
+        // horseAppearance.textContent = state.resultHorse.appearance;
 
-            nextBtn.style.display = 'block';
-            submitBtn.style.display = 'none';
-            loadingContainer.style.display = 'block';
-            resultContent.style.display = 'none';
+        // 设置图片src为matu的值
+        horseImg.src = state.resultHorse.matu;
+        horseImg.alt = `${state.resultHorse.name}形象`;
+    }
 
+    // 重置测试
+    function resetTest() {
+        state.currentQuestion = 0;
+        state.answers = new Array(questions.length).fill(null);
+        state.totalScore = 0;
+        state.resultHorse = null;
+
+        nextBtn.style.display = 'block';
+        submitBtn.style.display = 'none';
+        loadingContainer.style.display = 'block';
+        resultContent.style.display = 'none';
+
+        updateProgress();
+        renderOptions();
+    }
+
+    // 事件监听
+    startBtn.addEventListener('click', function() {
+        showPage('quiz');
+        updateProgress();
+        renderOptions();
+    });
+
+    prevBtn.addEventListener('click', function() {
+        if (state.currentQuestion > 0) {
+            state.currentQuestion--;
             updateProgress();
             renderOptions();
         }
+    });
 
-        // 事件监听
-        startBtn.addEventListener('click', function() {
-            showPage('quiz');
+    nextBtn.addEventListener('click', function() {
+        if (state.currentQuestion < questions.length - 1 && state.answers[state.currentQuestion] !== null) {
+            state.currentQuestion++;
             updateProgress();
             renderOptions();
-        });
+        }
+    });
 
-        prevBtn.addEventListener('click', function() {
-            if (state.currentQuestion > 0) {
-                state.currentQuestion--;
-                updateProgress();
-                renderOptions();
-            }
-        });
+    submitBtn.addEventListener('click', function() {
+        const allAnswered = state.answers.every(answer => answer !== null);
 
-        nextBtn.addEventListener('click', function() {
-            if (state.currentQuestion < questions.length - 1 && state.answers[state.currentQuestion] !== null) {
-                state.currentQuestion++;
-                updateProgress();
-                renderOptions();
-            }
-        });
+        if (!allAnswered) {
+            alert('请先回答所有问题！');
+            return;
+        }
 
-        submitBtn.addEventListener('click', function() {
-            const allAnswered = state.answers.every(answer => answer !== null);
+        showPage('result');
 
-            if (!allAnswered) {
-                alert('请先回答所有问题！');
-                return;
-            }
+        setTimeout(() => {
+            showResult();
+        }, 3000);
+    });
 
-            showPage('result');
-
-            setTimeout(() => {
-                showResult();
-            }, 3000);
-        });
-
-        restartBtn.addEventListener('click', function() {
-            resetTest();
-            showPage('home');
-        });
-    </script>
+    restartBtn.addEventListener('click', function() {
+        resetTest();
+        showPage('home');
+    });
+</script>
 </body>
 </html>
